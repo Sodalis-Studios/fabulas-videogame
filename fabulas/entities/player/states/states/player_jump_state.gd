@@ -30,6 +30,7 @@ func on_physics_process(delta: float) -> void:
 		has_cut_jump = true
 		
 	if player.velocity.y >= 0:
+		player.ledge_hop_time_left = player.player_movement_stats.ledge_hop_window
 		state_machine.change_state(PlayerStatesNames.FALLING)
 	
 	super.on_physics_process(delta)
