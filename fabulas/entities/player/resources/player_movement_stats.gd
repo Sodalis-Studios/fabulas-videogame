@@ -13,3 +13,11 @@ class_name PlayerMovementStats extends Resource
 
 @export_category("Jump")
 @export_range(0.0, 1.0, 0.025) var variable_jump_multiplier: float = 0.5
+
+@export_category("Ledge Hop")
+## Max pixels the player can fall short of a ledge and still get help
+@export var ledge_hop_max_height: float = 20.0
+## Extra pixels added to the hop to make up for height lost to physics steps
+@export var ledge_hop_margin: float = 3.0
+## Seconds after the jump's apex during which the ledge hop is available
+@export var ledge_hop_window: float = 0.1
