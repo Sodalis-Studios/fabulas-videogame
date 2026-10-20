@@ -10,4 +10,7 @@ jump_force = -1500.0
 jump_gravity = 3000.0
 fall_gravity = 5000.0
 variable_jump_multiplier = 0.35
+ledge_hop_max_height = 24.0
+ledge_hop_margin = 5.0
+ledge_hop_window = 0.08
 metadata/_custom_type_script = "uid://0qd0du7mbniu"

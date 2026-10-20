@@ -17,6 +17,8 @@ extends CharacterBody2D
 # ====================== LOCAL VARIABLES ======================
 var is_god_mode: bool = false
 var boost_velocity: Vector2 = Vector2.ZERO
+## Tiempo restante para poder hacer ledge hop (se activa en el punto más alto del salto)
+var ledge_hop_time_left: float = 0.0
 
 # *********************** BUILT IN CALLBACKS **********************
 func _ready() -> void:
@@ -60,6 +62,43 @@ func print_debug(variables: Array) -> void:
 	for i in variables:
 		print(i)
 		
+
+
+func try_ledge_hop(direction: float) -> bool:
+	# Only if it's inside the hop window
+	if ledge_hop_time_left <= 0.0:
+		return false
+	# is touching towards the wall
+	if direction == 0 or not is_on_wall_only():
+		return false
+	# Only if it's pushing towards the wall
+	if signf(get_wall_normal().x) == signf(direction):
+		return false
+
+	var stats := player_movement_stats
+	# forward is 2 pixels towards where it's going
+	var forward := Vector2(signf(direction) * 2.0, 0)
+
+	# looks for the corner
+	for h in range(1, int(stats.ledge_hop_max_height) + 1):
+		var up := Vector2(0, -h)
+		
+		# Simulates the movement and checks if it collides or not
+		if test_move(global_transform, up):
+			return false 
+			
+		# simulates the movement and two pixels forward
+		if not test_move(global_transform.translated(up), forward):
+			
+			# Velocity to rise h px: v = √(2·g·h). The margin makes up for the height lost in the physics steps.
+			var hop_velocity := -sqrt(2.0 * stats.jump_gravity * (h + stats.ledge_hop_margin))
+			# Only if it's not already rising faster than that
+			if velocity.y > hop_velocity:
+				velocity.y = hop_velocity
+				ledge_hop_time_left = 0.0  # Only does it once per jump
+				return true
+			return false
+	return false
 # ******************* SIGNALS CALLBACKS *******************
 func _on_hurtbox_took_knockback(knockback_dir: Vector2) -> void:
 	received_knockback(knockback_dir)

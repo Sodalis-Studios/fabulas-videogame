@@ -3,6 +3,10 @@ extends PlayerStateBase
 func start() -> void:
 	player.play_animation(PlayerAnimations.FALL)
 
+
+func end() -> void:
+	player.ledge_hop_time_left = 0.0
+
 func on_physics_process(delta: float) -> void:
 	player.handle_animation(direction)
 	
@@ -15,6 +19,8 @@ func on_physics_process(delta: float) -> void:
 			state_machine.change_state(PlayerStatesNames.RUNNING)
 	
 	super.on_physics_process(delta)
+	player.try_ledge_hop(direction)
+	player.ledge_hop_time_left -= delta
 
 func on_input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump") and not player.coyote_timer.is_stopped():
