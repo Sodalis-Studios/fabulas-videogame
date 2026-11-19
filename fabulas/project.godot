@@ -33,6 +33,7 @@ SignalBus="*uid://x0aqjjdx4sjo"
 TransitionsScreen="*uid://d3q5v8lvhww64"
 DebugMenu="*uid://b6g2tw8kh0d6y"
 CheckpointManager="*uid://bc0he2ik862mq"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
@@ -40,6 +41,10 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg")
 
 [file_customization]
 
