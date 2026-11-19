@@ -26,3 +26,6 @@ mono_crash.*.json
 
 # Built Visual Studio Code Extensions
 *.vsix
+# Godot AI regenerates a machine-specific MCP config here on editor start.
+# The shared, portable one lives at the repo root (../.mcp.json).
+.mcp.json
