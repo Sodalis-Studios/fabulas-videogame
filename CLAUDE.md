@@ -36,3 +36,21 @@ General description of what was done.
 * Change 1
 * Change 2
 ```
+
+When opening a PR:
+
+- Assign it to the person running the session (`gh api user -q .login`).
+- Add the label that matches the PR type:
+
+| PR type | Label |
+|---|---|
+| `feat` adding a new entity (enemy, platform, key...) | `entity` |
+| `feat` adding a new component or system | `component` |
+| `feat` adding a new level | `level` |
+| any other `feat` | `enhancement` |
+| `fix` | `fix` |
+| `refactor` | `refactor` |
+| `docs` | `documentation` |
+| `chore`, `build`, `ci` (tooling, config, maintenance) | `chore` |
+
+Reviewers are requested automatically through CODEOWNERS.
