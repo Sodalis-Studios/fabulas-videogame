@@ -54,3 +54,10 @@ When opening a PR:
 | `chore`, `build`, `ci` (tooling, config, maintenance) | `chore` |
 
 Reviewers are requested automatically through CODEOWNERS.
+
+## Merging
+
+- PRs into `dev`: **Create a merge commit**.
+- `dev` into `main`: **Squash and merge**, so `main` keeps one clean commit per release.
+- After squashing `dev` into `main`, merge `main` back into `dev`. Otherwise the next `dev` → `main` PR shows already-released commits again and may conflict.
+- Agents don't merge PRs unless explicitly asked.
