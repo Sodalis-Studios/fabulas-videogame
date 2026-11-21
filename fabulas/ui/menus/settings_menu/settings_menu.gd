@@ -1,227 +1,275 @@
 extends Control
 class_name SettingsMenu
 
+## Settings screen (language, video and audio). Changes apply as soon as they are made
+## and are saved when the menu closes. The values live in the SettingsManager
+## autoload; this scene only shows and edits them.
+##
+## There is a single instance, in the GameMenus autoload: open it with
+## GameMenus.open_settings(), which also tells you when it closes.
+
 signal closed
 
-const SETTINGS_PATH = "user://settings.cfg"
+## Seconds before a display change is reverted if the player doesn't confirm it.
+const CONFIRM_SECONDS := 10
 
-var pending_master: float = 100.0
-var pending_sfx: float = 100.0
-var pending_music: float = 100.0
-var pending_voices: float = 100.0
-var pending_mute: bool = false
-var pending_resolution: int = 2
-var pending_display: int = 0
-var pending_vsync: int = 0
-var pending_fps: int = 1
-var pending_brightness: float = 1.0
+## Row labels are dimmed, and the one of the row that has focus is shown at
+## full strength.
+const LABEL_COLOR := Color(0.96, 0.93, 0.88, 0.6)
+const LABEL_FOCUS_COLOR := Color(0.96, 0.93, 0.88, 1.0)
 
-# Respaldo para revertir si se pulsa Back sin Apply 
-var _saved_master: float = 100.0
-var _saved_sfx: float = 100.0
-var _saved_music: float = 100.0
-var _saved_voices: float = 100.0
-var _saved_mute: bool = false
-var _saved_resolution: int = 2
-var _saved_display: int = 0
-var _saved_vsync: int = 0
-var _saved_fps: int = 1
-var _saved_brightness: float = 1.0
+@onready var _tabs: TabContainer = %Tabs
+@onready var _language: OptionButton = %Language
+@onready var _show_play_time: CheckButton = %ShowPlayTime
+@onready var _display_mode: OptionButton = %DisplayMode
+@onready var _window_size: OptionButton = %WindowSize
+@onready var _vsync: CheckButton = %VSync
+@onready var _max_fps: OptionButton = %MaxFps
+@onready var _mute: CheckButton = %Mute
+@onready var _restore_button: Button = %RestoreButton
+@onready var _back_button: Button = %BackButton
+@onready var _confirm: ConfirmDialog = %ConfirmDisplay
+@onready var _confirm_timer: Timer = %ConfirmTimer
 
-# READY
+## Slider -> setting it edits. Each slider has a sibling "Value" label.
+@onready var _sliders := {
+	%CameraShake: &"camera_shake",
+	%Vibration: &"vibration",
+	%Brightness: &"brightness",
+	%Master: &"master_volume",
+	%Music: &"music_volume",
+	%Sfx: &"sfx_volume",
+	%Voices: &"voices_volume",
+}
 
+## Control that gets focus when each tab is shown, by tab index.
+@onready var _first_control_per_tab: Array[Control] = [_language, _display_mode, %Master]
+
+var _window_sizes: Array[Vector2i] = []
+var _display_backup := {}
+var _confirm_return_focus: Control
+var _seconds_left := 0
+
+
+# ******************* LIFECYCLE *******************
 func _ready() -> void:
-	load_settings()
-	apply_settings()
-	update_ui()
-	_snapshot_saved()
+	_populate_static_options()
+	_connect_controls()
+	visibility_changed.connect(_on_visibility_changed)
+	if visible:
+		_on_visibility_changed()
 
-#  AL ABRIR EL MENÚ guarda el estado actual 
 
-func _on_visibility_changed() -> void:
-	if visible and is_inside_tree():
-		_snapshot_saved()
-
-func _snapshot_saved() -> void:
-	_saved_master     = pending_master
-	_saved_sfx        = pending_sfx
-	_saved_music      = pending_music
-	_saved_mute       = pending_mute
-	_saved_voices     = pending_voices
-	_saved_resolution = pending_resolution
-	_saved_display    = pending_display
-	_saved_vsync      = pending_vsync
-	_saved_fps        = pending_fps
-	_saved_brightness = pending_brightness
-
-#  SEÑALES  aplican EN TIEMPO REAL 
-
-func _safe_volume(value: float) -> float:
-	return linear_to_db(max(value, 0.0001) / 100.0)
-
-func _on_master_value_changed(value: float) -> void:
-	pending_master = value
-	SoundManager.set_bus_volume("Master", _safe_volume(value))
-
-func _on_music_value_changed(value: float) -> void:
-	pending_music = value
-	SoundManager.set_bus_volume("Music", _safe_volume(value))
-
-func _on_sfx_value_changed(value: float) -> void:
-	pending_sfx = value
-	SoundManager.set_bus_volume("SFX", _safe_volume(value))
-
-func _on_voices_value_changed(value: float) -> void:
-	pending_voices = value
-	SoundManager.set_bus_volume("Voices", _safe_volume(value))
-	
-func _on_check_box_toggled(toggled_on: bool) -> void:
-	pending_mute = toggled_on
-	AudioServer.set_bus_mute(0, pending_mute)
-
-func _apply_windowed_resolution() -> void:
-	match pending_resolution:
-		0: DisplayServer.window_set_size(Vector2i(1920, 1080))
-		1: DisplayServer.window_set_size(Vector2i(1600, 900))
-		2: DisplayServer.window_set_size(Vector2i(1280, 720))
-
-func _on_resolution_item_selected(index: int) -> void:
-	pending_resolution = index
-	if pending_display == 0:
-		_apply_windowed_resolution()
-
-func _on_display_item_selected(index: int) -> void:
-	pending_display = index
-	match pending_display:
-		0:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-			_apply_windowed_resolution()
-		1:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-		2:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
-
-func _on_v_sync_item_selected(index: int) -> void:
-	pending_vsync = index
-	match pending_vsync:
-		0: DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
-		1: DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-
-func _on_fps_item_selected(index: int) -> void:
-	pending_fps = index
-	match pending_fps:
-		0: Engine.max_fps = 30
-		1: Engine.max_fps = 60
-		2: Engine.max_fps = 120
-		3: Engine.max_fps = 0
-
-func _on_brillo_value_changed(value: float) -> void:
-	pending_brightness = value
-	BrightnessManager.set_brightness(value)
-
-# APPLY — confirma y guarda en disco
-
-func _on_apply_pressed() -> void:
-	save_settings()
-	_snapshot_saved()
-
-# BACK — revierte si no se aplicó 
-
-func _on_back_pressed() -> void:
-	pending_master     = _saved_master
-	pending_music      = _saved_music
-	pending_sfx        = _saved_sfx
-	pending_mute       = _saved_mute
-	pending_voices       = _saved_voices
-	pending_resolution = _saved_resolution
-	pending_display    = _saved_display
-	pending_vsync      = _saved_vsync
-	pending_fps        = _saved_fps
-	pending_brightness = _saved_brightness
-
-	apply_settings()
-	update_ui()
-	closed.emit()
-	self.visible = false
-	
-# APPLY SETTINGS 
-
-func apply_settings() -> void:
-	SoundManager.set_bus_volume("Master", _safe_volume(pending_master))
-	SoundManager.set_bus_volume("Music",  _safe_volume(pending_music))
-	SoundManager.set_bus_volume("SFX",    _safe_volume(pending_sfx))
-	SoundManager.set_bus_volume("Voices", _safe_volume(pending_voices))
-	AudioServer.set_bus_mute(0, pending_mute)
-
-	match pending_display:
-		0:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-			_apply_windowed_resolution() 
-		1:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-		2:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
-
-	match pending_vsync:
-		0: DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
-		1: DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-
-	match pending_fps:
-		0: Engine.max_fps = 30
-		1: Engine.max_fps = 60
-		2: Engine.max_fps = 120
-		3: Engine.max_fps = 0
-
-	BrightnessManager.set_brightness(pending_brightness) 
-
-# GUARDAR / CARGAR
-
-func save_settings() -> void:
-	var config = ConfigFile.new()
-	config.set_value("audio", "master",     pending_master)
-	config.set_value("audio", "sfx",        pending_sfx)
-	config.set_value("audio", "music",      pending_music)
-	config.set_value("audio", "voices",      pending_voices)
-	config.set_value("audio", "mute",       pending_mute)
-	config.set_value("video", "resolution", pending_resolution)
-	config.set_value("video", "display",    pending_display)
-	config.set_value("video", "vsync",      pending_vsync)
-	config.set_value("video", "fps",        pending_fps)
-	config.set_value("video", "brightness", pending_brightness)
-	config.save(SETTINGS_PATH)
-
-func load_settings() -> void:
-	var config = ConfigFile.new()
-	if config.load(SETTINGS_PATH) != OK:
+func _unhandled_input(event: InputEvent) -> void:
+	# While the display confirmation is open it handles the input itself.
+	if not visible or _confirm.visible:
 		return
-	pending_master     = config.get_value("audio", "master",     100.0)
-	pending_sfx        = config.get_value("audio", "sfx",        100.0)
-	pending_music      = config.get_value("audio", "music",      100.0)
-	pending_voices      = config.get_value("audio", "voices",      100.0)
-	pending_mute       = config.get_value("audio", "mute",       false)
-	pending_resolution = config.get_value("video", "resolution", 2)
-	pending_display    = config.get_value("video", "display",    0)
-	pending_vsync      = config.get_value("video", "vsync",      0)
-	pending_fps        = config.get_value("video", "fps",        1)
-	pending_brightness = config.get_value("video", "brightness", 1.0)
+
+	if event.is_action_pressed("ui_cancel"):
+		close()
+	elif event.is_action_pressed("menu_prev_tab"):
+		_switch_tab(-1)
+	elif event.is_action_pressed("menu_next_tab"):
+		_switch_tab(1)
+	else:
+		return
+	get_viewport().set_input_as_handled()
 
 
-# UPDATE UI 
+# ******************* PUBLIC API *******************
+func open() -> void:
+	show()
 
-func update_ui() -> void:
-	$TabContainer/Audio/audioContainer/Master/Master.value = pending_master
-	$TabContainer/Audio/audioContainer/Sfx/Sfx.value = pending_sfx
-	$TabContainer/Audio/audioContainer/Music/Music.value = pending_music
-	$TabContainer/Audio/audioContainer/Voices/Voices.value = pending_voices
-	$TabContainer/Audio/audioContainer/mute/CheckBox.button_pressed = pending_mute
-	$TabContainer/Video/HBoxContainer/videoContainer2/resultion/Resolution.selected = pending_resolution
-	$TabContainer/Video/HBoxContainer/videoContainer2/Display/Display.selected = pending_display
-	$TabContainer/Video/HBoxContainer/videoContainer/VSync/VSync.selected = pending_vsync
-	$TabContainer/Video/HBoxContainer/videoContainer/Fps/FPS.selected = pending_fps
-	$TabContainer/Video/HBoxContainer/videoContainer2/brillo/Brillo.value = pending_brightness
+
+## Saves the settings, hides the menu and emits `closed`.
+func close() -> void:
+	if _confirm.visible:
+		_revert_display()
+	SettingsManager.save()
+	hide()
+	closed.emit()
+
+
+# ******************* SETUP *******************
+func _populate_static_options() -> void:
+	_language.clear()
+	for locale: String in SettingsManager.LANGUAGES:
+		_language.add_item(SettingsManager.LANGUAGES[locale])
+
+	_display_mode.clear()
+	_display_mode.add_item("Windowed", SettingsManager.DisplayMode.WINDOWED)
+	_display_mode.add_item("Borderless fullscreen", SettingsManager.DisplayMode.BORDERLESS)
+	_display_mode.add_item("Fullscreen", SettingsManager.DisplayMode.FULLSCREEN)
+
+	_max_fps.clear()
+	for limit in SettingsManager.FPS_LIMITS:
+		_max_fps.add_item(str(limit) if limit > 0 else "Unlimited")
+
+
+func _connect_controls() -> void:
+	_language.item_selected.connect(func(index: int) -> void:
+		SettingsManager.set_value(&"language", SettingsManager.LANGUAGES.keys()[index]))
+	_show_play_time.toggled.connect(func(on: bool) -> void:
+		SettingsManager.set_value(&"show_play_time", on)
+		_update_toggle_text(_show_play_time))
+	_display_mode.item_selected.connect(func(index: int) -> void:
+		_change_display(&"display_mode", _display_mode.get_item_id(index), _display_mode))
+	_window_size.item_selected.connect(func(index: int) -> void:
+		_change_display(&"window_size", _window_sizes[index], _window_size))
+	_vsync.toggled.connect(func(on: bool) -> void:
+		SettingsManager.set_value(&"vsync", on)
+		_update_toggle_text(_vsync))
+	_max_fps.item_selected.connect(func(index: int) -> void:
+		SettingsManager.set_value(&"max_fps", SettingsManager.FPS_LIMITS[index]))
+	_mute.toggled.connect(func(on: bool) -> void:
+		SettingsManager.set_value(&"mute", on)
+		_update_toggle_text(_mute))
+
+	for slider: HSlider in _sliders:
+		slider.value_changed.connect(_on_slider_changed.bind(slider))
+
+	_restore_button.pressed.connect(_on_restore_pressed)
+	_back_button.pressed.connect(close)
+	_confirm.confirmed.connect(_keep_display)
+	_confirm.canceled.connect(_revert_display)
+	_confirm_timer.timeout.connect(_on_confirm_tick)
+
+	# Highlight the label of the row that has focus.
+	for control: Control in find_children("*", "Control", true, false):
+		if control.focus_mode == FOCUS_NONE:
+			continue
+		var label := _row_label(control)
+		if label:
+			label.add_theme_color_override(&"font_color", LABEL_COLOR)
+			control.focus_entered.connect(label.add_theme_color_override.bind(&"font_color", LABEL_FOCUS_COLOR))
+			control.focus_exited.connect(label.add_theme_color_override.bind(&"font_color", LABEL_COLOR))
+
+
+## The label in the same settings row as `control` (the cell to its left in
+## the grid), or null if the control isn't in a settings row.
+func _row_label(control: Control) -> Label:
+	var cell: Node = control
+	if not control.get_parent() is GridContainer:
+		cell = control.get_parent()
+	if not cell.get_parent() is GridContainer or cell.get_index() == 0:
+		return null
+	return cell.get_parent().get_child(cell.get_index() - 1) as Label
+
+
+# ******************* REFRESH *******************
+## Updates every control from SettingsManager without emitting signals.
+func _refresh() -> void:
+	_language.select(SettingsManager.LANGUAGES.keys().find(SettingsManager.get_value(&"language")))
+	_show_play_time.set_pressed_no_signal(SettingsManager.get_value(&"show_play_time"))
+	_update_toggle_text(_show_play_time)
+
+	var mode: int = SettingsManager.get_value(&"display_mode")
+	_display_mode.select(_display_mode.get_item_index(mode))
+
+	var current_size: Vector2i = SettingsManager.get_value(&"window_size")
+	_window_sizes = SettingsManager.get_available_window_sizes()
+	_window_size.clear()
+	for window_size in _window_sizes:
+		_window_size.add_item("%d x %d" % [window_size.x, window_size.y])
+	var size_index := _window_sizes.find(current_size)
+	_window_size.select(size_index if size_index != -1 else _window_sizes.size() - 1)
+	# The window size only matters in windowed mode.
+	_window_size.disabled = mode != SettingsManager.DisplayMode.WINDOWED
+
+	_vsync.set_pressed_no_signal(SettingsManager.get_value(&"vsync"))
+	_update_toggle_text(_vsync)
+	_max_fps.select(SettingsManager.FPS_LIMITS.find(SettingsManager.get_value(&"max_fps")))
+	_mute.set_pressed_no_signal(SettingsManager.get_value(&"mute"))
+	_update_toggle_text(_mute)
+
+	for slider: HSlider in _sliders:
+		slider.set_value_no_signal(SettingsManager.get_value(_sliders[slider]))
+		_update_value_label(slider)
+
+
+## The default switch icon is too small to read on its own, so the toggle
+## also says On/Off (coloured by the theme's pressed/normal font colours).
+func _update_toggle_text(toggle: CheckButton) -> void:
+	toggle.text = "On" if toggle.button_pressed else "Off"
+
+
+func _update_value_label(slider: HSlider) -> void:
+	# Brightness goes from 0.5 to 1.5; show it as 50% to 150%.
+	var percent := slider.value * 100.0 if _sliders[slider] == &"brightness" else slider.value
+	slider.get_node("../Value").text = "%d%%" % roundi(percent)
+
+
+# ******************* FOCUS AND TABS *******************
+func _on_visibility_changed() -> void:
+	if not visible:
+		return
+	_refresh()
+	GameMenus.focus_quietly.call_deferred(_first_control_per_tab[_tabs.current_tab])
+
+
+func _switch_tab(direction: int) -> void:
+	_tabs.current_tab = wrapi(_tabs.current_tab + direction, 0, _tabs.get_tab_count())
+	SoundManager.play_ui("EnterButton")
+	GameMenus.focus_quietly(_first_control_per_tab[_tabs.current_tab])
+
+
+# ******************* VALUE CHANGES *******************
+func _on_slider_changed(value: float, slider: HSlider) -> void:
+	SettingsManager.set_value(_sliders[slider], value)
+	_update_value_label(slider)
+	# A short pulse, so the player feels the strength they're choosing.
+	if _sliders[slider] == &"vibration":
+		InputDevice.vibrate(0.6, 0.15)
+
+
+func _on_restore_pressed() -> void:
+	SettingsManager.restore_defaults()
+	_refresh()
+
+
+# ******************* DISPLAY CONFIRMATION *******************
+## Applies a display mode or window size change and asks the player to keep
+## it; if they don't answer in CONFIRM_SECONDS, it goes back to the old one.
+func _change_display(key: StringName, value: Variant, source: Control) -> void:
+	if SettingsManager.get_value(key) == value:
+		return
+	_confirm_return_focus = source
+	if not _confirm.visible:
+		_display_backup = {
+			&"display_mode": SettingsManager.get_value(&"display_mode"),
+			&"window_size": SettingsManager.get_value(&"window_size"),
+		}
+	SettingsManager.set_value(key, value)
+	_refresh()
+
+	_seconds_left = CONFIRM_SECONDS
+	_confirm.ask("Keep these display settings?", _countdown_text(), "Keep", "Revert")
+	_confirm_timer.start(1.0)
+
+
+func _on_confirm_tick() -> void:
+	_seconds_left -= 1
+	if _seconds_left <= 0:
+		_confirm.hide()
+		_revert_display()
+	else:
+		_confirm.set_message(_countdown_text())
+
+
+func _countdown_text() -> String:
+	return tr("Reverting in %d s") % _seconds_left
+
+
+func _keep_display() -> void:
+	_confirm_timer.stop()
+	GameMenus.focus_quietly.call_deferred(_confirm_return_focus)
+
+
+func _revert_display() -> void:
+	_confirm_timer.stop()
+	_confirm.hide()
+	for key in _display_backup:
+		SettingsManager.set_value(key, _display_backup[key])
+	_refresh()
+	# Back to the option that was changed.
+	GameMenus.focus_quietly.call_deferred(_confirm_return_focus)

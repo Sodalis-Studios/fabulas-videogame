@@ -1,0 +1,114 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/menus/name_dialog/name_dialog.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://cl07t5kuiu5o1" path="res://ui/menus/settings_menu/settings_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://ui/input_hint/input_hint.gd" id="hint_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialog"]
+content_margin_left = 56.0
+content_margin_top = 40.0
+content_margin_right = 56.0
+content_margin_bottom = 36.0
+bg_color = Color(0.1, 0.1, 0.11, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.16)
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_name"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0.35)
+border_width_bottom = 2
+border_color = Color(0.96, 0.93, 0.88, 0.5)
+
+[node name="NameDialog" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dialog")
+
+[node name="Layout" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="Center/Panel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Name your game"
+horizontal_alignment = 1
+
+[node name="NameBox" type="PanelContainer" parent="Center/Panel/Layout"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_name")
+
+[node name="Row" type="HBoxContainer" parent="Center/Panel/Layout/NameBox"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="Center/Panel/Layout/NameBox/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "Game 1"
+
+[node name="Counter" type="Label" parent="Center/Panel/Layout/NameBox/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.96, 0.93, 0.88, 0.45)
+theme_override_font_sizes/font_size = 24
+text = "0 / 16"
+
+[node name="CharacterGrid" type="GridContainer" parent="Center/Panel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 10
+
+[node name="ActionRow" type="HBoxContainer" parent="Center/Panel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Hint" type="Label" parent="Center/Panel/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.93, 0.88, 0.45)
+theme_override_font_sizes/font_size = 22
+text = "Type a name   Enter OK   Esc cancel"
+horizontal_alignment = 1
+script = ExtResource("hint_script")
+keyboard_text = "Type a name   Enter OK   Esc cancel"
+controller_text = "A select   LB delete   RB space   Start OK   B cancel"

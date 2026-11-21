@@ -5,8 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://ne62yfmf10ql" path="res://entities/player/player.tscn" id="2_ma40e"]
 [ext_resource type="PackedScene" uid="uid://drut5tkemtw57" path="res://shared/camera/camera_rig.tscn" id="3_2lpev"]
 [ext_resource type="PackedScene" uid="uid://buoeno6u6lafx" path="res://shared/camera/camera_zone.tscn" id="4_ma40e"]
-[ext_resource type="PackedScene" uid="uid://b8p2ff1ifmr5o" path="res://ui/menus/pause_menu/pause_menu.tscn" id="5_6xh0e"]
-[ext_resource type="PackedScene" uid="uid://ckfknnfgb6qw6" path="res://ui/menus/settings_menu/settings_menu.tscn" id="6_3t3yo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fcnqv"]
 size = Vector2(554.19727, 1641.5897)
@@ -85,12 +83,5 @@ position = Vector2(18766, -7389)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cameras/Door" unique_id=142391509]
 position = Vector2(-86, -64)
 shape = SubResource("RectangleShape2D_fcnqv")
-
-[node name="Menus" type="CanvasLayer" parent="." unique_id=1939251926]
-
-[node name="PauseMenu" parent="Menus" unique_id=248075495 instance=ExtResource("5_6xh0e")]
-
-[node name="SettingsMenu" parent="Menus" unique_id=992204846 instance=ExtResource("6_3t3yo")]
-visible = false
 
 [connection signal="body_entered" from="Cameras/Door" to="." method="_on_door_body_entered"]

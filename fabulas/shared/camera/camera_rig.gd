@@ -84,8 +84,8 @@ func _on_player_exited_camera_zone(zone: CameraZone) -> void:
 # *********************** PRIVATE METHODS **********************
 func _apply_shake() -> void:
 	# Square the trauma to make strong shakes more intense but decay faster
-	var amount: float = trauma * trauma
-	
+	var amount: float = trauma * trauma * SettingsManager.get_value(&"camera_shake") / 100.0
+
 	# Apply random noise to offeset and rotation based on trauma amount
 	camera.offset.x = max_shake_offset.x * amount * randf_range(-1.0, 1.0)
 	camera.offset.y = max_shake_offset.y * amount * randf_range(-1.0, 1.0)

@@ -1,56 +1,94 @@
 [gd_scene format=3 uid="uid://b6g2tw8kh0d6y"]
 
-[ext_resource type="PackedScene" uid="uid://wuwxfjcxtklr" path="res://ui/buttons/on_off_button/menu_option.tscn" id="1_ppho5"]
 [ext_resource type="Script" uid="uid://bhnximcsawxha" path="res://ui/menus/debug/debug_menu.gd" id="1_ua8si"]
 [ext_resource type="Script" uid="uid://du485c02oq06" path="res://ui/menus/debug/menus/menu_container.gd" id="2_ablim"]
 [ext_resource type="Script" uid="uid://dsg7wf6iwp0j7" path="res://ui/menus/debug/menus/main_menu.gd" id="3_wpmyv"]
 [ext_resource type="Script" uid="uid://dt8gal86pwhvg" path="res://ui/menus/debug/menus/cheats_menu.gd" id="5_8l6j4"]
 [ext_resource type="Script" uid="uid://bi4s2ajplitww" path="res://ui/menus/debug/menus/scene_menu.gd" id="6_v3bsk"]
-[ext_resource type="Script" uid="uid://dga1ptjxnpass" path="res://ui/menus/debug/menus/visual_menu.gd" id="7_6whr1"]
-[ext_resource type="Script" uid="uid://chybxshn8w66l" path="res://ui/menus/debug/menus/info_menu.gd" id="8_wpmyv"]
+[ext_resource type="Script" uid="uid://dga1ptjxnpass" path="res://ui/menus/debug/menus/display_menu.gd" id="7_6whr1"]
+[ext_resource type="Script" uid="uid://cr5vmu0wspcep" path="res://ui/menus/debug/menus/save_menu.gd" id="8_save"]
 [ext_resource type="Script" uid="uid://dl6bi1ns4rv7v" path="res://ui/menus/debug/info_panel/info_panel.gd" id="9_wpmyv"]
+[ext_resource type="Script" uid="uid://biodmb6nhdrst" path="res://ui/input_hint/input_hint.gd" id="hint_script"]
 
-[node name="debug_menu" type="CanvasLayer" unique_id=1465117140]
-process_mode = 2
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nvi66"]
+content_margin_left = 20.0
+content_margin_top = 16.0
+content_margin_right = 20.0
+content_margin_bottom = 16.0
+bg_color = Color(0.07, 0.07, 0.09, 0.97)
+border_width_right = 2
+border_color = Color(1, 1, 1, 0.1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_info"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0, 0, 0, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.55)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="debug_menu" type="CanvasLayer" unique_id=1650707114]
+process_mode = 3
 layer = 381
 visible = false
 script = ExtResource("1_ua8si")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1723101855]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=725660446]
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_right = 471.0
+offset_right = 520.0
 grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=2083739307]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=1292510220]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nvi66")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=1962734570]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=1049295546]
 layout_mode = 2
+theme_override_constants/separation = 8
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=532459254]
+[node name="TitleLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1505901763]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 52
-text = "DEBUG MENU"
+theme_override_font_sizes/font_size = 44
+text = "DEBUG"
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1169213557]
+[node name="HintLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1920837054]
+modulate = Color(1, 1, 1, 0.6)
 layout_mode = 2
-theme_override_font_sizes/font_size = 29
-text = "0 to close"
+theme_override_font_sizes/font_size = 20
+text = "↑↓ move   ←→ change   Enter select
+Esc back   0 close"
 horizontal_alignment = 1
+script = ExtResource("hint_script")
+keyboard_text = "↑↓ move   ←→ change   Enter select
+Esc back   0 close"
+controller_text = "D-pad move and change
+A select   B back"
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=644445346]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1442739481]
 layout_mode = 2
 
-[node name="MenuContainer" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1547206980]
+[node name="MenuContainer" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1489884021]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("2_ablim")
 
-[node name="MainMenu" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer" unique_id=95729497]
+[node name="MainMenu" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer" unique_id=210787391]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -60,7 +98,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_wpmyv")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu" unique_id=565818887]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu" unique_id=35045724]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -68,77 +106,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CheatsOptions" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer" unique_id=1483911272 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/CheatsOptions" index="1" unique_id=744584850]
-text = "Cheats"
-
-[node name="ValueLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/CheatsOptions" index="2" unique_id=917034890]
-visible = false
-
-[node name="SceneOptions" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer" unique_id=1023434628 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/SceneOptions" index="1" unique_id=744584850]
-text = "Scenes"
-
-[node name="ValueLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/SceneOptions" index="2" unique_id=917034890]
-visible = false
-
-[node name="VisualOptions" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer" unique_id=1196984936 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/VisualOptions" index="1" unique_id=744584850]
-text = "Visuals"
-
-[node name="ValueLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/VisualOptions" index="2" unique_id=917034890]
-visible = false
-
-[node name="InfoOptions" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer" unique_id=1858998970 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/InfoOptions" index="1" unique_id=744584850]
-text = "Info"
-
-[node name="ValueLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/InfoOptions" index="2" unique_id=917034890]
-visible = false
-text = "OFF
-"
-
-[node name="CheatsMenu" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer" unique_id=716694566]
+[node name="CheatsMenu" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer" unique_id=966203357]
 visible = false
 layout_mode = 1
-anchor_right = 0.209
-anchor_bottom = 0.142
-offset_right = -98.439
-offset_bottom = -135.184
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("5_8l6j4")
-metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/CheatsMenu" unique_id=2010489312]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/CheatsMenu" unique_id=1212767526]
 layout_mode = 1
-offset_right = 255.0
-offset_bottom = 104.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="GodMode" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/CheatsMenu/VBoxContainer" unique_id=1080334488 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-option_id = "GODFLY"
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/CheatsMenu/VBoxContainer/GodMode" index="1" unique_id=744584850]
-text = "God Mode"
-
-[node name="Delete" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/CheatsMenu/VBoxContainer" unique_id=267361281 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-option_id = "DELETE"
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/CheatsMenu/VBoxContainer/Delete" index="1" unique_id=744584850]
-text = "Delete Checkpoints"
-
-[node name="ValueLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/CheatsMenu/VBoxContainer/Delete" index="2" unique_id=917034890]
-visible = false
-
-[node name="SceneMenu" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer" unique_id=1454779855]
+[node name="SceneMenu" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer" unique_id=199989481]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -148,7 +134,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_v3bsk")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu" unique_id=978159231]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu" unique_id=742274819]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -156,72 +142,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="level_6" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer" unique_id=1700271110 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-option_id = "LEVEL_START"
-
-[node name="ArrowLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_6" index="0" unique_id=1251062539]
-text = "LEVEL_START
-"
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_6" index="1" unique_id=744584850]
-text = "LEVEL_START"
-
-[node name="ValueLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_6" index="2" unique_id=917034890]
-visible = false
-
-[node name="level_1" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer" unique_id=1831510857 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-option_id = "LEVEL_1"
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_1" index="1" unique_id=744584850]
-text = "LEVEL_1"
-
-[node name="ValueLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_1" index="2" unique_id=917034890]
-visible = false
-
-[node name="level_2" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer" unique_id=1199882014 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-option_id = "LEVEL_2"
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_2" index="1" unique_id=744584850]
-text = "LEVEL_2"
-
-[node name="ValueLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_2" index="2" unique_id=917034890]
-visible = false
-
-[node name="level_3" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer" unique_id=589027844 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-option_id = "LEVEL_3"
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_3" index="1" unique_id=744584850]
-text = "LEVEL_3"
-
-[node name="ValueLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_3" index="2" unique_id=917034890]
-visible = false
-
-[node name="level_4" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer" unique_id=2069070788 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-option_id = "LEVEL_4"
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_4" index="1" unique_id=744584850]
-text = "LEVEL_4"
-
-[node name="ValueLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_4" index="2" unique_id=917034890]
-visible = false
-
-[node name="level_5" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer" unique_id=650740004 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-option_id = "LEVEL_5"
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_5" index="1" unique_id=744584850]
-text = "LEVEL_5
-"
-
-[node name="ValueLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_5" index="2" unique_id=917034890]
-visible = false
-
-[node name="VisualMenu" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer" unique_id=325974488]
+[node name="DisplayMenu" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer" unique_id=867112907]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -231,7 +152,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("7_6whr1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/VisualMenu" unique_id=819247084]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/DisplayMenu" unique_id=409827054]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -239,21 +160,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Collisions" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/VisualMenu/VBoxContainer" unique_id=1961199554 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-option_id = "collisions"
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/VisualMenu/VBoxContainer/Collisions" index="1" unique_id=744584850]
-text = "Collisions"
-
-[node name="Hitboxes" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/VisualMenu/VBoxContainer" unique_id=1379631180 instance=ExtResource("1_ppho5")]
-visible = false
-layout_mode = 2
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/VisualMenu/VBoxContainer/Hitboxes" index="1" unique_id=744584850]
-text = "Hitboxes"
-
-[node name="InfoMenu" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer" unique_id=1900448789]
+[node name="SaveMenu" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer" unique_id=872807226]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -261,9 +168,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("8_wpmyv")
+script = ExtResource("8_save")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/InfoMenu" unique_id=848901129]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SaveMenu" unique_id=833174084]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -271,57 +178,63 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Info" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/InfoMenu/VBoxContainer" unique_id=636701607 instance=ExtResource("1_ppho5")]
-layout_mode = 2
-option_id = "info_panel"
-
-[node name="NameLabel" parent="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/InfoMenu/VBoxContainer/Info" index="1" unique_id=744584850]
-text = "Info"
-
-[node name="InfoPanel" type="CanvasLayer" parent="." unique_id=82648882]
+[node name="InfoPanel" type="CanvasLayer" parent="." unique_id=1653579529]
 script = ExtResource("9_wpmyv")
 
-[node name="PanelContainer" type="PanelContainer" parent="InfoPanel" unique_id=1907648210]
+[node name="PanelContainer" type="PanelContainer" parent="InfoPanel" unique_id=1528214419]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -158.0
+offset_top = -40.0
 offset_right = 40.0
 grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_info")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="InfoPanel/PanelContainer" unique_id=1404430462]
+[node name="VBoxContainer" type="VBoxContainer" parent="InfoPanel/PanelContainer" unique_id=1451723870]
 layout_mode = 2
 
-[node name="FPSLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=1232107987]
+[node name="FPSLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=2066698107]
 layout_mode = 2
 
-[node name="StateLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=1509034828]
+[node name="SceneLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=1527956982]
 layout_mode = 2
 
-[node name="PositionLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=1287483359]
+[node name="GameLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=1167491613]
 layout_mode = 2
 
-[node name="VelocityLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=1324750279]
+[node name="StateLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=1445429133]
 layout_mode = 2
 
-[node name="MemoryLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=243089202]
+[node name="PositionLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=2030100893]
 layout_mode = 2
 
-[node name="ObjectsLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=1919804755]
+[node name="VelocityLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=1794306013]
 layout_mode = 2
 
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/CheatsOptions"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/SceneOptions"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/VisualOptions"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/MainMenu/VBoxContainer/InfoOptions"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/CheatsMenu/VBoxContainer/GodMode"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/CheatsMenu/VBoxContainer/Delete"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_6"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_1"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_2"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_3"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_4"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/SceneMenu/VBoxContainer/level_5"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/VisualMenu/VBoxContainer/Collisions"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/VisualMenu/VBoxContainer/Hitboxes"]
-[editable path="MarginContainer/PanelContainer/VBoxContainer/MenuContainer/InfoMenu/VBoxContainer/Info"]
+[node name="MemoryLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=1796606862]
+layout_mode = 2
+
+[node name="ObjectsLabel" type="Label" parent="InfoPanel/PanelContainer/VBoxContainer" unique_id=697171246]
+layout_mode = 2
+
+[node name="Badge" type="CanvasLayer" parent="." unique_id=583332964]
+layer = 380
+visible = false
+
+[node name="BadgePanel" type="PanelContainer" parent="Badge" unique_id=952968593]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_badge")
+
+[node name="BadgeLabel" type="Label" parent="Badge/BadgePanel" unique_id=1689717243]
+unique_name_in_owner = true
+modulate = Color(1, 0.85, 0.4, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "GOD"

@@ -9,6 +9,8 @@ export_credentials.cfg
 
 # Imported translations (automatically generated from CSV files)
 *.translation
+# Kept in git: project.godot points to them, so a fresh clone needs them.
+!shared/localization/*.translation
 
 # Mono-specific ignores
 .mono/

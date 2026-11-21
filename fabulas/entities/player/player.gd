@@ -15,7 +15,6 @@ extends CharacterBody2D
 @export var player_movement_stats: PlayerMovementStats
 
 # ====================== LOCAL VARIABLES ======================
-var is_god_mode: bool = false
 var boost_velocity: Vector2 = Vector2.ZERO
 ## Tiempo restante para poder hacer ledge hop (se activa en el punto más alto del salto)
 var ledge_hop_time_left: float = 0.0
@@ -24,6 +23,11 @@ var ledge_hop_time_left: float = 0.0
 func _ready() -> void:
 	add_to_group("player")
 	hurtbox.took_knockback.connect(_on_hurtbox_took_knockback)
+	# God mode lives in the debug menu, so it stays on after respawning or
+	# changing level. Applied after the state machine starts (deferred too).
+	DebugMenu.god_mode_changed.connect(_apply_god_mode)
+	if DebugMenu.god_mode:
+		_apply_god_mode.call_deferred(true)
 	if (CheckpointManager.checkpoint_active and SceneManager.get_current_scene_id() == CheckpointManager.current_scene):
 		global_position = CheckpointManager.checkpoint_position
 		TransitionsScreen.fade_in()
@@ -44,18 +48,18 @@ func get_current_gravity() -> float:
 	return player_movement_stats.jump_gravity
 
 func received_knockback(knockback_dir: Vector2) -> void:
-	if is_god_mode or DebugMenu.god_mode:
+	if DebugMenu.god_mode:
 		return
-	
+
 	velocity = knockback_dir
 
 	state_machine.change_state(PlayerStatesNames.KNOCKBACK)
 
-func toggle_god_mode() -> void:
-	is_god_mode = !is_god_mode
-	if is_god_mode:
+## God mode (debug): flies freely and can't be hit.
+func _apply_god_mode(on: bool) -> void:
+	if on:
 		state_machine.change_state(PlayerStatesNames.GODFLY)
-	else:
+	elif state_machine.current_state and state_machine.current_state.name == PlayerStatesNames.GODFLY:
 		state_machine.change_state(PlayerStatesNames.FALLING)
 		
 func print_debug(variables: Array) -> void:

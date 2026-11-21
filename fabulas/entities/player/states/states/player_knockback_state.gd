@@ -36,6 +36,8 @@ var player_velocity_x: float = 0.0
 
 # *********************** STATE MACHINE CALLBACKS **********************
 func start() -> void:
+	SignalBus.player_hit.emit()
+
 	# Player uncontrolled/falling animation
 	player.play_animation(PlayerAnimations.FALL) # TODO: Replace with ragdoll animation
 
@@ -126,7 +128,7 @@ func end() -> void:
 	if player.animated_sprite_2d.material:
 		player.animated_sprite_2d.material.set_shader_parameter("flash_modifier", 0.0)
 
-	Engine.time_scale = 1.0
+	Engine.time_scale = DebugMenu.game_speed
 
 # ******************* PRIVATE METHODS *******************
 func _start_knockback_timer() -> void:
@@ -149,11 +151,11 @@ func _start_blinking_effect() -> void:
 		blink_tween.tween_property(sprite_material, "shader_parameter/flash_modifier", 0.0, 0.15)
 
 func _apply_freeze_frame() -> void:
-	Engine.time_scale = time_scale_during_freeze_frame
+	Engine.time_scale = time_scale_during_freeze_frame * DebugMenu.game_speed
 	
 	var timer: SceneTreeTimer = get_tree().create_timer(freeze_frame_duration, true, false, true)
 
-	timer.timeout.connect(func(): Engine.time_scale = 1.0)
+	timer.timeout.connect(func(): Engine.time_scale = DebugMenu.game_speed)
 
 func _apply_squash_and_stretch() -> void:
 	player.animated_sprite_2d.scale = squash_scale

@@ -4,8 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://b6duq485arpkt" path="res://worlds/level_1_introduction/level_1_introduction.tscn" id="1_qb2xy"]
 [ext_resource type="PackedScene" uid="uid://iq1qa3p3deq8" path="res://worlds/level_2_moving_platforms/level_2_moving_platforms.tscn" id="2_278p2"]
 [ext_resource type="PackedScene" uid="uid://d2ir144nqsdud" path="res://worlds/level_3_maze/level_3_maze.tscn" id="3_qb2xy"]
-[ext_resource type="PackedScene" uid="uid://b8p2ff1ifmr5o" path="res://ui/menus/pause_menu/pause_menu.tscn" id="4_b3epk"]
-[ext_resource type="PackedScene" uid="uid://ckfknnfgb6qw6" path="res://ui/menus/settings_menu/settings_menu.tscn" id="5_p5alx"]
 [ext_resource type="PackedScene" uid="uid://ne62yfmf10ql" path="res://entities/player/player.tscn" id="8_4idhh"]
 [ext_resource type="PackedScene" uid="uid://cdyqyrmhc3mfg" path="res://ui/hud/key/keys_hud.tscn" id="9_1gny1"]
 [ext_resource type="PackedScene" uid="uid://drut5tkemtw57" path="res://shared/camera/camera_rig.tscn" id="9_b3epk"]
@@ -27,11 +25,6 @@ position = Vector2(0, -40321)
 position = Vector2(0, -51905)
 
 [node name="Menus" type="CanvasLayer" parent="." unique_id=480824241]
-
-[node name="PauseMenu" parent="Menus" unique_id=248075495 instance=ExtResource("4_b3epk")]
-
-[node name="SettingsMenu" parent="Menus" unique_id=992204846 instance=ExtResource("5_p5alx")]
-visible = false
 
 [node name="KeysHud" parent="Menus" unique_id=665351789 instance=ExtResource("9_1gny1")]
 visible = false

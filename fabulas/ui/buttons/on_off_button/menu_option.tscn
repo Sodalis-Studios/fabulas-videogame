@@ -8,21 +8,25 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 12
 script = ExtResource("1_qgd7c")
 
 [node name="ArrowLabel" type="Label" parent="." unique_id=1251062539]
+custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 26
 
 [node name="NameLabel" type="Label" parent="." unique_id=744584850]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme_override_font_sizes/font_size = 30
 text = "Opcion"
 
 [node name="ValueLabel" type="Label" parent="." unique_id=917034890]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 1
+theme_override_font_sizes/font_size = 30
 text = "OFF"

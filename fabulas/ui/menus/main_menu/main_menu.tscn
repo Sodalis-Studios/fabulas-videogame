@@ -4,8 +4,11 @@
 [ext_resource type="Script" uid="uid://b0fe6nwphbru5" path="res://ui/menus/main_menu/main_menu.gd" id="2_txwgg"]
 [ext_resource type="Texture2D" uid="uid://dl88j0jwh67i1" path="res://ui/menus/main_menu/art/torre 2.png" id="3_igis3"]
 [ext_resource type="PackedScene" uid="uid://bbbaoxb0tew6m" path="res://ui/buttons/normal_button/custom_button.tscn" id="3_j3h1s"]
-[ext_resource type="PackedScene" uid="uid://ckfknnfgb6qw6" path="res://ui/menus/settings_menu/settings_menu.tscn" id="3_uni0y"]
+[ext_resource type="Theme" uid="uid://cl07t5kuiu5o1" path="res://ui/menus/settings_menu/settings_theme.tres" id="4_igis3"]
 [ext_resource type="FontFile" uid="uid://bb17e8srbq51o" path="res://assets/fonts/gohan_2/Gohan.ttf" id="5_uni0y"]
+[ext_resource type="Script" uid="uid://oftjpra0owq1" path="res://ui/menus/menu_selector/menu_selector.gd" id="7_m57jf"]
+[ext_resource type="Texture2D" uid="uid://ds6ac3f3kl7hp" path="res://ui/menus/menu_selector/feather.png" id="8_0rrps"]
+[ext_resource type="PackedScene" path="res://ui/menus/save_slots/save_slots_menu.tscn" id="8_uni0y"]
 
 [node name="MainMenu" type="Control" unique_id=1221789689]
 process_mode = 2
@@ -33,20 +36,6 @@ texture = ExtResource("3_igis3")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="SettingsMenu" parent="." unique_id=992204846 instance=ExtResource("3_uni0y")]
-visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 627.0
-offset_top = 367.0
-offset_right = 627.0
-offset_bottom = 367.0
-grow_horizontal = 1
-grow_vertical = 1
-size_flags_vertical = 4
-
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1634943321]
 layout_mode = 1
 anchors_preset = -1
@@ -64,6 +53,7 @@ grow_horizontal = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("4_igis3")
 
 [node name="Titulo" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1093872111]
 layout_mode = 2
@@ -80,31 +70,36 @@ layout_mode = 2
 [node name="Start" parent="MarginContainer/VBoxContainer" unique_id=307769692 instance=ExtResource("3_j3h1s")]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_type_variation = &"MainMenuButton"
 theme_override_font_sizes/font_size = 65
-text = "start
-"
+text = "Start"
 
 [node name="settings" parent="MarginContainer/VBoxContainer" unique_id=411673386 instance=ExtResource("3_j3h1s")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_type_variation = &"MainMenuButton"
 theme_override_font_sizes/font_size = 65
-text = "Settings
-
-
-"
+text = "Settings"
 
 [node name="exit" parent="MarginContainer/VBoxContainer" unique_id=1685232391 instance=ExtResource("3_j3h1s")]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_type_variation = &"MainMenuButton"
 theme_override_font_sizes/font_size = 65
-text = "exit
-"
+text = "Exit"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=544505578]
+[node name="MenuSelector" type="Control" parent="." unique_id=564647665 node_paths=PackedStringArray("buttons_container")]
+anchors_preset = 0
+script = ExtResource("7_m57jf")
+buttons_container = NodePath("../MarginContainer/VBoxContainer")
+icon = ExtResource("8_0rrps")
+marker_size = Vector2(90, 30)
+marker_color = Color(1, 1, 1, 1)
+gap = 14.0
 
-[node name="SettingsMenu" parent="CanvasLayer" unique_id=46285259 instance=ExtResource("3_uni0y")]
-visible = false
+[node name="SaveSlotsMenu" parent="." unique_id=459099002 instance=ExtResource("8_uni0y")]
+layout_mode = 1
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/settings" to="." method="_on_settings_pressed"]

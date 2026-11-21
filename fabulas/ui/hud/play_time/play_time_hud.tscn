@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/hud/play_time/play_time_hud.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://8uajmgpvwlve" path="res://assets/fonts/alte_haas_grotesk/AlteHaasGroteskBold.ttf" id="2_font"]
+
+[node name="PlayTimeHud" type="CanvasLayer"]
+layer = 3
+visible = false
+script = ExtResource("1_script")
+
+[node name="Time" type="Label" parent="."]
+auto_translate_mode = 2
+offset_left = 28.0
+offset_top = 20.0
+offset_right = 188.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(0.96, 0.93, 0.88, 0.9)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.75)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 28
+text = "0:00"

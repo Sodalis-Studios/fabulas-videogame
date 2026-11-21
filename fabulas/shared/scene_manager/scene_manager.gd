@@ -30,24 +30,12 @@ const SCENES := {
 func goto(scene_id: SceneID, marker_name: String = "") -> void:
 	current_scene_id = scene_id
 	teleport_marker = marker_name
+	SaveManager.on_scene_entered(scene_id)
 
 	get_tree().call_deferred(
 		"change_scene_to_file",
 		SCENES[scene_id]
 	)
-
-
-func paused_game(paused: bool) -> void:
-	get_tree().paused = paused
-
-	var canvas := get_tree().current_scene.get_node_or_null("Menus")
-	if canvas == null:
-		return
-
-	var pause_menu := canvas.get_node_or_null("PauseMenu")
-
-	if pause_menu:
-		pause_menu.visible = paused
 
 
 func get_current_scene_id() -> SceneID:
