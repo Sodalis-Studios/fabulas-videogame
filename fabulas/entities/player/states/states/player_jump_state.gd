@@ -5,7 +5,8 @@ var has_cut_jump: bool = false
 func start() -> void:
 	player.play_animation(PlayerAnimations.JUMP)
 	SoundManager.play_sfx("Jump")
-	
+	SignalBus.player_jumped.emit()
+
 	has_cut_jump = false
 	
 	player.coyote_timer.stop()

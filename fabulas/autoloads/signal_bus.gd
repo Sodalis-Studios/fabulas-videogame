@@ -3,6 +3,13 @@ extends Node
 ## Singleton that acts as an event bus for the game, allowing different parts of the game to communicate with each other directly through signals.
 
 # ====================== PLAYER SIGNALS ======================
+## Emitted every time the player jumps (for the game statistics).
+@warning_ignore("unused_signal")
+signal player_jumped
+
+## Emitted every time the player takes a hit (for the game statistics).
+@warning_ignore("unused_signal")
+signal player_hit
 
 # ====================== CAMERA SIGNALS ======================
 @warning_ignore("unused_signal")

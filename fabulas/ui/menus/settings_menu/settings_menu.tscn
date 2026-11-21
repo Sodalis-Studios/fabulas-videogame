@@ -1,474 +1,380 @@
 [gd_scene format=3 uid="uid://ckfknnfgb6qw6"]
 
-[ext_resource type="Script" uid="uid://cirywfgdcw0il" path="res://ui/menus/settings_menu/settings_menu.gd" id="1_3d2gn"]
-[ext_resource type="FontFile" uid="uid://8uajmgpvwlve" path="res://assets/fonts/alte_haas_grotesk/AlteHaasGroteskBold.ttf" id="2_3d2gn"]
-[ext_resource type="PackedScene" uid="uid://bbbaoxb0tew6m" path="res://ui/buttons/normal_button/custom_button.tscn" id="2_rj87i"]
-[ext_resource type="Texture2D" uid="uid://dl88j0jwh67i1" path="res://ui/menus/main_menu/art/torre 2.png" id="2_yrmop"]
+[ext_resource type="Script" uid="uid://cirywfgdcw0il" path="res://ui/menus/settings_menu/settings_menu.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://cl07t5kuiu5o1" path="res://ui/menus/settings_menu/settings_theme.tres" id="2_theme"]
+[ext_resource type="FontFile" uid="uid://bb17e8srbq51o" path="res://assets/fonts/gohan_2/Gohan.ttf" id="3_title"]
+[ext_resource type="PackedScene" uid="uid://bbbaoxb0tew6m" path="res://ui/buttons/normal_button/custom_button.tscn" id="4_button"]
+[ext_resource type="PackedScene" path="res://ui/menus/confirm_dialog/confirm_dialog.tscn" id="5_confirm"]
+[ext_resource type="Shader" uid="uid://b65ocn3grbwub" path="res://ui/menus/pause_menu/blur_background.gdshader" id="6_blur"]
+[ext_resource type="Script" path="res://ui/input_hint/input_hint.gd" id="hint_script"]
 
-[sub_resource type="Theme" id="Theme_drevy"]
-VBoxContainer/constants/separation = 12
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
+shader = ExtResource("6_blur")
+shader_parameter/amount = 1.0
+shader_parameter/radius = 5.0
+shader_parameter/lod = 2.5
+shader_parameter/tint = Color(0.03, 0.03, 0.04, 0.72)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_panel"]
+content_margin_left = 138.0
+content_margin_top = 107.0
+content_margin_right = 138.0
+content_margin_bottom = 94.0
 
 [node name="SettingsMenu" type="Control" unique_id=992204846]
-process_mode = 2
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 374.0
-offset_top = 205.0
-offset_right = -455.0
-offset_bottom = -292.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 4
-script = ExtResource("1_3d2gn")
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=124316895]
-visible = false
+[node name="Dim" type="ColorRect" parent="." unique_id=278603304]
+material = SubResource("ShaderMaterial_blur")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_yrmop")
-expand_mode = 1
-stretch_mode = 6
 
-[node name="TabContainer" type="TabContainer" parent="." unique_id=1028540888]
+[node name="Center" type="CenterContainer" parent="." unique_id=1653386588]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0380001
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 5.0
-offset_right = -0.12609863
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
-tabs_rearrange_group = 3
 
-[node name="Video" type="MarginContainer" parent="TabContainer" unique_id=1763454638]
-visible = false
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=1570531618]
+custom_minimum_size = Vector2(1516, 0)
 layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 34
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_styles/panel = SubResource("StyleBoxEmpty_panel")
+
+[node name="Layout" type="VBoxContainer" parent="Center/Panel" unique_id=1953288147]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Title" type="Label" parent="Center/Panel/Layout" unique_id=1486480083]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_title")
+theme_override_font_sizes/font_size = 72
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="Tabs" type="TabContainer" parent="Center/Panel/Layout" unique_id=1201539357]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 600)
+layout_mode = 2
+tab_alignment = 1
+current_tab = 0
+
+[node name="General" type="MarginContainer" parent="Center/Panel/Layout/Tabs"]
+layout_mode = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 56
+theme_override_constants/margin_right = 48
 metadata/_tab_index = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Video" unique_id=1023920161]
+[node name="Grid" type="GridContainer" parent="Center/Panel/Layout/Tabs/General"]
 layout_mode = 2
+theme_override_constants/h_separation = 96
+theme_override_constants/v_separation = 36
+columns = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="TabContainer/Video/HBoxContainer" unique_id=29027887]
+[node name="LanguageLabel" type="Label" parent="Center/Panel/Layout/Tabs/General/Grid"]
+custom_minimum_size = Vector2(360, 0)
 layout_mode = 2
-theme_override_constants/margin_right = 14
+text = "Language"
 
-[node name="videoContainer2" type="VBoxContainer" parent="TabContainer/Video/HBoxContainer" unique_id=1772010832]
+[node name="Language" type="OptionButton" parent="Center/Panel/Layout/Tabs/General/Grid"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 8
-theme = SubResource("Theme_drevy")
+size_flags_horizontal = 3
 
-[node name="mar4" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2" unique_id=1920072276]
+[node name="CameraShakeLabel" type="Label" parent="Center/Panel/Layout/Tabs/General/Grid"]
 layout_mode = 2
-theme_override_constants/margin_top = 29
+text = "Camera shake"
 
-[node name="Display" type="HBoxContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2" unique_id=637185292]
+[node name="CameraShakeRow" type="HBoxContainer" parent="Center/Panel/Layout/Tabs/General/Grid"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_horizontal = 3
+theme_override_constants/separation = 24
 
-[node name="MarginContainer5" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2/Display" unique_id=1748087624]
+[node name="CameraShake" type="HSlider" parent="Center/Panel/Layout/Tabs/General/Grid/CameraShakeRow"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/margin_left = 30
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 5.0
+value = 100.0
 
-[node name="Label3" type="Label" parent="TabContainer/Video/HBoxContainer/videoContainer2/Display" unique_id=1806686660]
+[node name="Value" type="Label" parent="Center/Panel/Layout/Tabs/General/Grid/CameraShakeRow"]
+custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 29
-text = "Display"
+text = "100%"
+horizontal_alignment = 2
 
-[node name="MarginContainer4" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2/Display" unique_id=1962965260]
+[node name="VibrationLabel" type="Label" parent="Center/Panel/Layout/Tabs/General/Grid"]
 layout_mode = 2
-theme_override_constants/margin_left = 71
+text = "Controller vibration"
 
-[node name="Display" type="OptionButton" parent="TabContainer/Video/HBoxContainer/videoContainer2/Display" unique_id=1406435877]
+[node name="VibrationRow" type="HBoxContainer" parent="Center/Panel/Layout/Tabs/General/Grid"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 29
-flat = true
-selected = 0
-item_count = 3
-popup/item_0/text = "Windowed"
-popup/item_0/id = 0
-popup/item_1/text = "Fullscreen"
-popup/item_1/id = 2
-popup/item_2/text = "Borderless"
-popup/item_2/id = 1
+size_flags_horizontal = 3
+theme_override_constants/separation = 24
 
-[node name="mar1" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2" unique_id=2027916154]
+[node name="Vibration" type="HSlider" parent="Center/Panel/Layout/Tabs/General/Grid/VibrationRow"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/margin_top = 29
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 5.0
+value = 100.0
 
-[node name="resultion" type="HBoxContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2" unique_id=1054635220]
+[node name="Value" type="Label" parent="Center/Panel/Layout/Tabs/General/Grid/VibrationRow"]
+custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+text = "100%"
+horizontal_alignment = 2
 
-[node name="MarginContainer5" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2/resultion" unique_id=1876865930]
+[node name="ShowPlayTimeLabel" type="Label" parent="Center/Panel/Layout/Tabs/General/Grid"]
 layout_mode = 2
-theme_override_constants/margin_left = 30
+text = "Show play time"
 
-[node name="Label3" type="Label" parent="TabContainer/Video/HBoxContainer/videoContainer2/resultion" unique_id=1870151813]
-layout_mode = 2
-theme_override_font_sizes/font_size = 29
-text = "Resolution"
-
-[node name="MarginContainer4" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2/resultion" unique_id=679138682]
-layout_mode = 2
-theme_override_constants/margin_left = 23
-
-[node name="Resolution" type="OptionButton" parent="TabContainer/Video/HBoxContainer/videoContainer2/resultion" unique_id=1555224588]
-layout_mode = 2
-theme_override_font_sizes/font_size = 29
-flat = true
-selected = 2
-item_count = 3
-popup/item_0/text = "1920 x 1080"
-popup/item_0/id = 0
-popup/item_1/text = "1600 x 900"
-popup/item_1/id = 1
-popup/item_2/text = "1280 x 720"
-popup/item_2/id = 2
-
-[node name="mar2" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2" unique_id=837019208]
-layout_mode = 2
-theme_override_constants/margin_top = 33
-
-[node name="brillo" type="HBoxContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2" unique_id=1271473419]
-layout_mode = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2/brillo" unique_id=874301671]
-layout_mode = 2
-theme_override_constants/margin_left = 30
-
-[node name="Label" type="Label" parent="TabContainer/Video/HBoxContainer/videoContainer2/brillo" unique_id=671385648]
+[node name="ShowPlayTime" type="CheckButton" parent="Center/Panel/Layout/Tabs/General/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(144, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("2_3d2gn")
-theme_override_font_sizes/font_size = 29
-text = "Brillo"
 
-[node name="MarginContainer6" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2/brillo" unique_id=619794012]
+[node name="Video" type="MarginContainer" parent="Center/Panel/Layout/Tabs" unique_id=1898824820]
+visible = false
 layout_mode = 2
-theme_override_constants/margin_left = 53
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 56
+theme_override_constants/margin_right = 48
+metadata/_tab_index = 1
 
-[node name="Brillo" type="HSlider" parent="TabContainer/Video/HBoxContainer/videoContainer2/brillo" unique_id=679577510]
+[node name="Grid" type="GridContainer" parent="Center/Panel/Layout/Tabs/Video" unique_id=993032032]
+layout_mode = 2
+theme_override_constants/h_separation = 96
+theme_override_constants/v_separation = 36
+columns = 2
+
+[node name="DisplayModeLabel" type="Label" parent="Center/Panel/Layout/Tabs/Video/Grid" unique_id=346836814]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+text = "Display mode"
+
+[node name="DisplayMode" type="OptionButton" parent="Center/Panel/Layout/Tabs/Video/Grid" unique_id=395412641]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WindowSizeLabel" type="Label" parent="Center/Panel/Layout/Tabs/Video/Grid" unique_id=199810742]
+layout_mode = 2
+text = "Window size"
+
+[node name="WindowSize" type="OptionButton" parent="Center/Panel/Layout/Tabs/Video/Grid" unique_id=487837496]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSyncLabel" type="Label" parent="Center/Panel/Layout/Tabs/Video/Grid" unique_id=445452918]
+layout_mode = 2
+text = "VSync"
+
+[node name="VSync" type="CheckButton" parent="Center/Panel/Layout/Tabs/Video/Grid" unique_id=677738291]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(144, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="MaxFpsLabel" type="Label" parent="Center/Panel/Layout/Tabs/Video/Grid" unique_id=1959255415]
+layout_mode = 2
+text = "Max FPS"
+
+[node name="MaxFps" type="OptionButton" parent="Center/Panel/Layout/Tabs/Video/Grid" unique_id=619526382]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BrightnessLabel" type="Label" parent="Center/Panel/Layout/Tabs/Video/Grid" unique_id=1750626252]
+layout_mode = 2
+text = "Brightness"
+
+[node name="BrightnessRow" type="HBoxContainer" parent="Center/Panel/Layout/Tabs/Video/Grid" unique_id=86431368]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 24
+
+[node name="Brightness" type="HSlider" parent="Center/Panel/Layout/Tabs/Video/Grid/BrightnessRow" unique_id=1244778525]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = 0.5
 max_value = 1.5
-step = 0.01
+step = 0.05
 value = 1.0
 
-[node name="MarginContainer3" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2/brillo" unique_id=479947278]
+[node name="Value" type="Label" parent="Center/Panel/Layout/Tabs/Video/Grid/BrightnessRow" unique_id=1644187908]
+custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
-theme_override_constants/margin_left = -5
+text = "100%"
+horizontal_alignment = 2
 
-[node name="mar3" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer2" unique_id=228445294]
+[node name="Audio" type="MarginContainer" parent="Center/Panel/Layout/Tabs" unique_id=1167009423]
+visible = false
 layout_mode = 2
-theme_override_constants/margin_top = 33
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 56
+theme_override_constants/margin_right = 48
+metadata/_tab_index = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Video/HBoxContainer" unique_id=54125217]
+[node name="Grid" type="GridContainer" parent="Center/Panel/Layout/Tabs/Audio" unique_id=1295055542]
 layout_mode = 2
-theme_override_constants/margin_right = 96
+theme_override_constants/h_separation = 96
+theme_override_constants/v_separation = 48
+columns = 2
 
-[node name="videoContainer" type="VBoxContainer" parent="TabContainer/Video/HBoxContainer" unique_id=1172042211]
+[node name="MasterLabel" type="Label" parent="Center/Panel/Layout/Tabs/Audio/Grid" unique_id=163531816]
+custom_minimum_size = Vector2(360, 0)
 layout_mode = 2
-size_flags_horizontal = 8
-theme = SubResource("Theme_drevy")
-
-[node name="mar4" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer" unique_id=348105198]
-layout_mode = 2
-theme_override_constants/margin_top = 33
-
-[node name="VSync" type="HBoxContainer" parent="TabContainer/Video/HBoxContainer/videoContainer" unique_id=1309225961]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="MarginContainer5" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer/VSync" unique_id=1436824085]
-layout_mode = 2
-theme_override_constants/margin_left = 30
-
-[node name="Label3" type="Label" parent="TabContainer/Video/HBoxContainer/videoContainer/VSync" unique_id=659376122]
-layout_mode = 2
-theme_override_font_sizes/font_size = 29
-text = "VSync"
-
-[node name="MarginContainer4" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer/VSync" unique_id=1437411834]
-layout_mode = 2
-theme_override_constants/margin_left = 71
-
-[node name="VSync" type="OptionButton" parent="TabContainer/Video/HBoxContainer/videoContainer/VSync" unique_id=373169129]
-layout_mode = 2
-theme_override_font_sizes/font_size = 29
-flat = true
-selected = 1
-item_count = 2
-popup/item_0/text = "Enabled"
-popup/item_0/id = 1
-popup/item_1/text = "Disabled"
-popup/item_1/id = 1
-
-[node name="mar1" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer" unique_id=378049827]
-layout_mode = 2
-theme_override_constants/margin_top = 33
-
-[node name="Fps" type="HBoxContainer" parent="TabContainer/Video/HBoxContainer/videoContainer" unique_id=41915776]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="MarginContainer5" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer/Fps" unique_id=1990370370]
-layout_mode = 2
-theme_override_constants/margin_left = 30
-
-[node name="Label3" type="Label" parent="TabContainer/Video/HBoxContainer/videoContainer/Fps" unique_id=1309148578]
-layout_mode = 2
-theme_override_font_sizes/font_size = 29
-text = "FPS"
-
-[node name="MarginContainer4" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer/Fps" unique_id=1767392752]
-layout_mode = 2
-theme_override_constants/margin_left = 101
-
-[node name="FPS" type="OptionButton" parent="TabContainer/Video/HBoxContainer/videoContainer/Fps" unique_id=808863182]
-layout_mode = 2
-theme_override_font_sizes/font_size = 29
-flat = true
-selected = 2
-item_count = 4
-popup/item_0/text = "30"
-popup/item_0/id = 0
-popup/item_1/text = "60"
-popup/item_1/id = 1
-popup/item_2/text = "120"
-popup/item_2/id = 2
-popup/item_3/text = "ilimitado"
-popup/item_3/id = 3
-
-[node name="mar2" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer" unique_id=579800695]
-layout_mode = 2
-theme_override_constants/margin_top = 33
-
-[node name="mar3" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer" unique_id=1131152391]
-layout_mode = 2
-theme_override_constants/margin_top = 33
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Video/HBoxContainer/videoContainer" unique_id=666015905]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 10
-
-[node name="Apply" parent="TabContainer/Video/HBoxContainer/videoContainer/HBoxContainer2" unique_id=307769692 instance=ExtResource("2_rj87i")]
-layout_mode = 2
-theme_override_font_sizes/font_size = 45
-text = "Apply
-"
-
-[node name="mar4" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer/HBoxContainer2" unique_id=2118173489]
-layout_mode = 2
-theme_override_constants/margin_right = 43
-
-[node name="Back" parent="TabContainer/Video/HBoxContainer/videoContainer/HBoxContainer2" unique_id=2048853395 instance=ExtResource("2_rj87i")]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 10
-theme_override_font_sizes/font_size = 45
-text = "Back
-"
-
-[node name="mar5" type="MarginContainer" parent="TabContainer/Video/HBoxContainer/videoContainer/HBoxContainer2" unique_id=1725620900]
-layout_mode = 2
-theme_override_constants/margin_right = 43
-
-[node name="Audio" type="MarginContainer" parent="TabContainer" unique_id=228610008]
-layout_mode = 2
-theme_override_constants/margin_left = 22
-theme_override_constants/margin_top = 62
-theme_override_constants/margin_right = 22
-theme_override_constants/margin_bottom = 22
-metadata/_tab_index = 1
-
-[node name="audioContainer" type="VBoxContainer" parent="TabContainer/Audio" unique_id=1025643462]
-layout_mode = 2
-theme = SubResource("Theme_drevy")
-
-[node name="Master" type="HBoxContainer" parent="TabContainer/Audio/audioContainer" unique_id=72474710]
-layout_mode = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="TabContainer/Audio/audioContainer/Master" unique_id=944750003]
-layout_mode = 2
-theme_override_constants/margin_left = 30
-
-[node name="Label" type="Label" parent="TabContainer/Audio/audioContainer/Master" unique_id=1119344104]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("2_3d2gn")
-theme_override_font_sizes/font_size = 35
 text = "Master"
 
-[node name="MarginContainer6" type="MarginContainer" parent="TabContainer/Audio/audioContainer/Master" unique_id=1311487523]
+[node name="MasterRow" type="HBoxContainer" parent="Center/Panel/Layout/Tabs/Audio/Grid" unique_id=622361742]
 layout_mode = 2
-theme_override_constants/margin_left = 76
+size_flags_horizontal = 3
+theme_override_constants/separation = 24
 
-[node name="Master" type="HSlider" parent="TabContainer/Audio/audioContainer/Master" unique_id=73060131]
+[node name="Master" type="HSlider" parent="Center/Panel/Layout/Tabs/Audio/Grid/MasterRow" unique_id=1497454659]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-value = 50.0
+step = 5.0
+value = 100.0
 
-[node name="Sfx" type="HBoxContainer" parent="TabContainer/Audio/audioContainer" unique_id=2074390276]
+[node name="Value" type="Label" parent="Center/Panel/Layout/Tabs/Audio/Grid/MasterRow" unique_id=1870291490]
+custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="TabContainer/Audio/audioContainer/Sfx" unique_id=1104617829]
+[node name="MusicLabel" type="Label" parent="Center/Panel/Layout/Tabs/Audio/Grid" unique_id=2019060123]
 layout_mode = 2
-theme_override_constants/margin_left = 30
-
-[node name="Label" type="Label" parent="TabContainer/Audio/audioContainer/Sfx" unique_id=1352112217]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("2_3d2gn")
-theme_override_font_sizes/font_size = 35
-text = "SFX"
-
-[node name="MarginContainer6" type="MarginContainer" parent="TabContainer/Audio/audioContainer/Sfx" unique_id=52804763]
-layout_mode = 2
-theme_override_constants/margin_left = 138
-
-[node name="Sfx" type="HSlider" parent="TabContainer/Audio/audioContainer/Sfx" unique_id=1475951996]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-value = 50.0
-
-[node name="Music" type="HBoxContainer" parent="TabContainer/Audio/audioContainer" unique_id=2049729670]
-layout_mode = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="TabContainer/Audio/audioContainer/Music" unique_id=288427745]
-layout_mode = 2
-theme_override_constants/margin_left = 30
-
-[node name="Label" type="Label" parent="TabContainer/Audio/audioContainer/Music" unique_id=488289694]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("2_3d2gn")
-theme_override_font_sizes/font_size = 35
 text = "Music"
 
-[node name="MarginContainer6" type="MarginContainer" parent="TabContainer/Audio/audioContainer/Music" unique_id=537375410]
+[node name="MusicRow" type="HBoxContainer" parent="Center/Panel/Layout/Tabs/Audio/Grid" unique_id=7052052]
 layout_mode = 2
-theme_override_constants/margin_left = 87
+size_flags_horizontal = 3
+theme_override_constants/separation = 24
 
-[node name="Music" type="HSlider" parent="TabContainer/Audio/audioContainer/Music" unique_id=1907887402]
+[node name="Music" type="HSlider" parent="Center/Panel/Layout/Tabs/Audio/Grid/MusicRow" unique_id=505604992]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-value = 50.0
+step = 5.0
+value = 100.0
 
-[node name="Voices" type="HBoxContainer" parent="TabContainer/Audio/audioContainer" unique_id=449481069]
+[node name="Value" type="Label" parent="Center/Panel/Layout/Tabs/Audio/Grid/MusicRow" unique_id=321356919]
+custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="TabContainer/Audio/audioContainer/Voices" unique_id=1648785544]
+[node name="SfxLabel" type="Label" parent="Center/Panel/Layout/Tabs/Audio/Grid" unique_id=1978475588]
 layout_mode = 2
-theme_override_constants/margin_left = 30
+text = "Sound effects"
 
-[node name="Label" type="Label" parent="TabContainer/Audio/audioContainer/Voices" unique_id=157049350]
+[node name="SfxRow" type="HBoxContainer" parent="Center/Panel/Layout/Tabs/Audio/Grid" unique_id=1481099666]
 layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("2_3d2gn")
-theme_override_font_sizes/font_size = 35
-text = "Voces"
+size_flags_horizontal = 3
+theme_override_constants/separation = 24
 
-[node name="MarginContainer6" type="MarginContainer" parent="TabContainer/Audio/audioContainer/Voices" unique_id=2103975446]
-layout_mode = 2
-theme_override_constants/margin_left = 87
-
-[node name="Voices" type="HSlider" parent="TabContainer/Audio/audioContainer/Voices" unique_id=1646205000]
+[node name="Sfx" type="HSlider" parent="Center/Panel/Layout/Tabs/Audio/Grid/SfxRow" unique_id=1105180109]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-value = 50.0
+step = 5.0
+value = 100.0
 
-[node name="mar1" type="MarginContainer" parent="TabContainer/Audio/audioContainer" unique_id=2105062700]
+[node name="Value" type="Label" parent="Center/Panel/Layout/Tabs/Audio/Grid/SfxRow" unique_id=5204102]
+custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
-theme_override_constants/margin_top = 33
+text = "100%"
+horizontal_alignment = 2
 
-[node name="mute" type="HBoxContainer" parent="TabContainer/Audio/audioContainer" unique_id=329126449]
+[node name="VoicesLabel" type="Label" parent="Center/Panel/Layout/Tabs/Audio/Grid" unique_id=60473111]
+layout_mode = 2
+text = "Voices"
+
+[node name="VoicesRow" type="HBoxContainer" parent="Center/Panel/Layout/Tabs/Audio/Grid" unique_id=2051006268]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 24
+
+[node name="Voices" type="HSlider" parent="Center/Panel/Layout/Tabs/Audio/Grid/VoicesRow" unique_id=2058914110]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 5.0
+value = 100.0
+
+[node name="Value" type="Label" parent="Center/Panel/Layout/Tabs/Audio/Grid/VoicesRow" unique_id=1664017697]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
+
+[node name="MuteLabel" type="Label" parent="Center/Panel/Layout/Tabs/Audio/Grid" unique_id=1602954158]
+layout_mode = 2
+text = "Mute all"
+
+[node name="Mute" type="CheckButton" parent="Center/Panel/Layout/Tabs/Audio/Grid" unique_id=512628195]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(144, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-size_flags_vertical = 0
 
-[node name="MarginContainer4" type="MarginContainer" parent="TabContainer/Audio/audioContainer/mute" unique_id=878438832]
+[node name="Footer" type="HBoxContainer" parent="Center/Panel/Layout" unique_id=91628339]
 layout_mode = 2
-theme_override_constants/margin_left = 30
+theme_override_constants/separation = 48
 
-[node name="Label2" type="Label" parent="TabContainer/Audio/audioContainer/mute" unique_id=2114898325]
+[node name="Hint" type="Label" parent="Center/Panel/Layout/Footer" unique_id=1443433073]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("2_3d2gn")
-theme_override_font_sizes/font_size = 35
-text = "Mute"
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.96, 0.93, 0.88, 0.5)
+theme_override_font_sizes/font_size = 24
+text = "Q / E  to change tab"
+script = ExtResource("hint_script")
+keyboard_text = "Q / E  to change tab"
+controller_text = "LB / RB  to change tab"
+vertical_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Audio/audioContainer/mute" unique_id=2136745186]
+[node name="RestoreButton" parent="Center/Panel/Layout/Footer" unique_id=491455497 instance=ExtResource("4_button")]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/margin_left = 26
+theme_override_font_sizes/font_size = 36
+text = "Restore defaults"
 
-[node name="CheckBox" type="CheckBox" parent="TabContainer/Audio/audioContainer/mute" unique_id=1165296704]
+[node name="BackButton" parent="Center/Panel/Layout/Footer" unique_id=994434330 instance=ExtResource("4_button")]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 36
+text = "Back"
 
-[node name="mar2" type="MarginContainer" parent="TabContainer/Audio/audioContainer" unique_id=301598279]
-layout_mode = 2
-theme_override_constants/margin_top = 33
+[node name="ConfirmDisplay" parent="." unique_id=652445835 instance=ExtResource("5_confirm")]
+unique_name_in_owner = true
+layout_mode = 1
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Audio/audioContainer" unique_id=1439014422]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 10
-
-[node name="Apply" parent="TabContainer/Audio/audioContainer/HBoxContainer3" unique_id=426774073 instance=ExtResource("2_rj87i")]
-layout_mode = 2
-theme_override_font_sizes/font_size = 45
-text = "Apply
-"
-
-[node name="mar4" type="MarginContainer" parent="TabContainer/Audio/audioContainer/HBoxContainer3" unique_id=1341719236]
-layout_mode = 2
-theme_override_constants/margin_right = 43
-
-[node name="Back" parent="TabContainer/Audio/audioContainer/HBoxContainer3" unique_id=1736450429 instance=ExtResource("2_rj87i")]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 10
-theme_override_font_sizes/font_size = 45
-text = "Back
-"
-
-[node name="mar5" type="MarginContainer" parent="TabContainer/Audio/audioContainer/HBoxContainer3" unique_id=716018123]
-layout_mode = 2
-theme_override_constants/margin_right = 16
-
-[connection signal="item_selected" from="TabContainer/Video/HBoxContainer/videoContainer2/Display/Display" to="." method="_on_display_item_selected"]
-[connection signal="item_selected" from="TabContainer/Video/HBoxContainer/videoContainer2/resultion/Resolution" to="." method="_on_resolution_item_selected"]
-[connection signal="value_changed" from="TabContainer/Video/HBoxContainer/videoContainer2/brillo/Brillo" to="." method="_on_brillo_value_changed"]
-[connection signal="item_selected" from="TabContainer/Video/HBoxContainer/videoContainer/VSync/VSync" to="." method="_on_v_sync_item_selected"]
-[connection signal="item_selected" from="TabContainer/Video/HBoxContainer/videoContainer/Fps/FPS" to="." method="_on_fps_item_selected"]
-[connection signal="pressed" from="TabContainer/Video/HBoxContainer/videoContainer/HBoxContainer2/Apply" to="." method="_on_apply_pressed"]
-[connection signal="pressed" from="TabContainer/Video/HBoxContainer/videoContainer/HBoxContainer2/Back" to="." method="_on_back_pressed"]
-[connection signal="value_changed" from="TabContainer/Audio/audioContainer/Master/Master" to="." method="_on_master_value_changed"]
-[connection signal="value_changed" from="TabContainer/Audio/audioContainer/Sfx/Sfx" to="." method="_on_sfx_value_changed"]
-[connection signal="value_changed" from="TabContainer/Audio/audioContainer/Music/Music" to="." method="_on_music_value_changed"]
-[connection signal="value_changed" from="TabContainer/Audio/audioContainer/Voices/Voices" to="." method="_on_voices_value_changed"]
-[connection signal="toggled" from="TabContainer/Audio/audioContainer/mute/CheckBox" to="." method="_on_check_box_toggled"]
-[connection signal="pressed" from="TabContainer/Audio/audioContainer/HBoxContainer3/Apply" to="." method="_on_apply_pressed"]
-[connection signal="pressed" from="TabContainer/Audio/audioContainer/HBoxContainer3/Back" to="." method="_on_back_pressed"]
+[node name="ConfirmTimer" type="Timer" parent="." unique_id=469498627]
+unique_name_in_owner = true

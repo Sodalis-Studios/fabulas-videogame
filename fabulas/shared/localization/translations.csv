@@ -1,0 +1,87 @@
+keys,en,es,fr,de,it,pt
+Start,Start,Jugar,Jouer,Spielen,Gioca,Jogar
+Settings,Settings,Ajustes,Options,Optionen,Opzioni,Opções
+Exit,Exit,Salir,Quitter,Beenden,Esci,Sair
+Are you sure?,Are you sure?,¿Seguro?,Confirmer ?,Wirklich?,Confermi?,Tem certeza?
+Yes,Yes,Sí,Oui,Ja,Sì,Sim
+No,No,No,Non,Nein,No,Não
+Name your game,Name your game,Ponle nombre a tu partida,Nomme ta partie,Benenne dein Spiel,Dai un nome alla partita,Dê um nome ao jogo
+Rename game,Rename game,Cambiar nombre,Renommer la partie,Spiel umbenennen,Rinomina partita,Renomear jogo
+Type a name   Enter OK   Esc cancel,Type a name   Enter OK   Esc cancel,Escribe un nombre   Enter aceptar   Esc cancelar,Écris un nom   Entrée valider   Échap annuler,Name eingeben   Enter OK   Esc abbrechen,Scrivi un nome   Invio conferma   Esc annulla,Digite um nome   Enter confirmar   Esc cancelar
+A select   LB delete   RB space   Start OK   B cancel,A select   LB delete   RB space   Start OK   B cancel,A elegir   LB borrar   RB espacio   Start aceptar   B cancelar,A choisir   LB effacer   RB espace   Start valider   B annuler,A wählen   LB löschen   RB Leertaste   Start OK   B abbrechen,A scegli   LB cancella   RB spazio   Start conferma   B annulla,A escolher   LB apagar   RB espaço   Start confirmar   B cancelar
+Space,Space,Espacio,Espace,Leertaste,Spazio,Espaço
+Delete,Delete,Borrar,Effacer,Löschen,Cancella,Apagar
+Clear,Clear,Limpiar,Vider,Leeren,Svuota,Limpar
+OK,OK,OK,OK,OK,OK,OK
+Paused,Paused,Pausa,Pause,Pause,Pausa,Pausa
+Resume,Resume,Continuar,Reprendre,Weiter,Riprendi,Continuar
+Statistics,Statistics,Estadísticas,Statistiques,Statistik,Statistiche,Estatísticas
+Esc   Resume,Esc   Resume,Esc   Continuar,Échap   Reprendre,Esc   Weiter,Esc   Riprendi,Esc   Continuar
+Start   Resume,Start   Resume,Start   Continuar,Start   Reprendre,Start   Weiter,Start   Riprendi,Start   Continuar
+Back,Back,Volver,Retour,Zurück,Indietro,Voltar
+Esc   Back,Esc   Back,Esc   Volver,Échap   Retour,Esc   Zurück,Esc   Indietro,Esc   Voltar
+B   Back,B   Back,B   Volver,B   Retour,B   Zurück,B   Indietro,B   Voltar
+Your progress will be lost.,Your progress will be lost.,Se perderá tu progreso.,Ta progression sera perdue.,Dein Fortschritt geht verloren.,I tuoi progressi andranno persi.,Seu progresso será perdido.
+You'll continue from your last checkpoint.,You'll continue from your last checkpoint.,Continuarás desde tu último punto de control.,Tu reprendras au dernier point de contrôle.,Du machst am letzten Kontrollpunkt weiter.,Riprenderai dall'ultimo checkpoint.,Você continuará do último checkpoint.
+You'll continue from the start of this level.,You'll continue from the start of this level.,Continuarás desde el inicio de este nivel.,Tu reprendras au début de ce niveau.,Du machst am Anfang dieses Levels weiter.,Riprenderai dall'inizio di questo livello.,Você continuará do início deste nível.
+Exit to the main menu?,Exit to the main menu?,¿Salir al menú principal?,Quitter vers le menu principal ?,Zum Hauptmenü zurückkehren?,Uscire al menu principale?,Sair para o menu principal?
+Cancel,Cancel,Cancelar,Annuler,Abbrechen,Annulla,Cancelar
+Select a game,Select a game,Elige una partida,Choisis une partie,Spiel auswählen,Scegli una partita,Escolha um jogo
+New game,New game,Nueva partida,Nouvelle partie,Neues Spiel,Nuova partita,Novo jogo
+Rename,Rename,Renombrar,Renommer,Benennen,Rinomina,Renomear
+Delete %s?,Delete %s?,¿Borrar %s?,Effacer %s ?,%s löschen?,Eliminare %s?,Apagar %s?
+This save will be lost forever.,This save will be lost forever.,Esta partida se perderá para siempre.,Cette sauvegarde sera perdue à jamais.,Dieser Spielstand geht für immer verloren.,Questo salvataggio andrà perso per sempre.,Este jogo salvo será perdido para sempre.
+Game %d,Game %d,Partida %d,Partie %d,Spiel %d,Partita %d,Jogo %d
+Intro,Intro,Intro,Intro,Intro,Intro,Intro
+Level Start,Level Start,Nivel Inicial,Niveau de départ,Startlevel,Livello iniziale,Nível inicial
+Beginning,Beginning,Comienzo,Début,Anfang,Inizio,Início
+Moving Platforms,Moving Platforms,Plataformas móviles,Plateformes mobiles,Bewegte Plattformen,Piattaforme mobili,Plataformas móveis
+Maze,Maze,Laberinto,Labyrinthe,Labyrinth,Labirinto,Labirinto
+Temporary Platforms,Temporary Platforms,Plataformas temporales,Plateformes éphémères,Temporäre Plattformen,Piattaforme temporanee,Plataformas temporárias
+Jumps,Jumps,Saltos,Sauts,Sprünge,Salti,Pulos
+Hits taken,Hits taken,Golpes,Coups,Treffer,Colpi,Golpes
+Play time,Play time,Tiempo,Temps,Zeit,Tempo,Tempo
+Jan,Jan,Ene,Janv,Jan,Gen,Jan
+Feb,Feb,Feb,Févr,Feb,Feb,Fev
+Mar,Mar,Mar,Mars,Mär,Mar,Mar
+Apr,Apr,Abr,Avr,Apr,Apr,Abr
+May,May,May,Mai,Mai,Mag,Mai
+Jun,Jun,Jun,Juin,Jun,Giu,Jun
+Jul,Jul,Jul,Juil,Jul,Lug,Jul
+Aug,Aug,Ago,Août,Aug,Ago,Ago
+Sep,Sep,Sep,Sept,Sep,Set,Set
+Oct,Oct,Oct,Oct,Okt,Ott,Out
+Nov,Nov,Nov,Nov,Nov,Nov,Nov
+Dec,Dec,Dic,Déc,Dez,Dic,Dez
+General,General,General,Général,Allgemein,Generale,Geral
+Video,Video,Vídeo,Vidéo,Video,Video,Vídeo
+Audio,Audio,Audio,Audio,Audio,Audio,Áudio
+Language,Language,Idioma,Langue,Sprache,Lingua,Idioma
+Camera shake,Camera shake,Temblor de cámara,Tremblement caméra,Kamerawackeln,Scuotimento camera,Tremor da câmera
+Controller vibration,Controller vibration,Vibración del mando,Vibration manette,Controller-Vibration,Vibrazione controller,Vibração do controle
+Show play time,Show play time,Mostrar tiempo,Afficher le temps,Spielzeit anzeigen,Mostra tempo,Mostrar tempo
+Display mode,Display mode,Modo de pantalla,Mode d'affichage,Anzeigemodus,Modalità schermo,Modo de tela
+Window size,Window size,Tamaño de ventana,Taille de fenêtre,Fenstergröße,Dimensioni finestra,Tamanho da janela
+VSync,VSync,VSync,VSync,VSync,VSync,VSync
+Max FPS,Max FPS,FPS máximos,FPS max,Max. FPS,FPS massimi,FPS máximo
+Brightness,Brightness,Brillo,Luminosité,Helligkeit,Luminosità,Brilho
+Master,Master,General,Général,Gesamt,Generale,Geral
+Music,Music,Música,Musique,Musik,Musica,Música
+Sound effects,Sound effects,Efectos de sonido,Effets sonores,Soundeffekte,Effetti sonori,Efeitos sonoros
+Voices,Voices,Voces,Voix,Stimmen,Voci,Vozes
+Mute all,Mute all,Silenciar todo,Tout couper,Alles stumm,Disattiva audio,Silenciar tudo
+Q / E  to change tab,Q / E  to change tab,Q / E  para cambiar de pestaña,Q / E  pour changer d'onglet,Q / E  Tab wechseln,Q / E  per cambiare scheda,Q / E  para trocar de aba
+LB / RB  to change tab,LB / RB  to change tab,LB / RB  para cambiar de pestaña,LB / RB  pour changer d'onglet,LB / RB  Tab wechseln,LB / RB  per cambiare scheda,LB / RB  para trocar de aba
+Restore defaults,Restore defaults,Restablecer,Par défaut,Zurücksetzen,Ripristina,Restaurar
+Windowed,Windowed,Ventana,Fenêtré,Fenster,Finestra,Janela
+Borderless fullscreen,Borderless fullscreen,Pantalla completa sin bordes,Plein écran sans bordure,Randloses Vollbild,Schermo intero senza bordi,Tela cheia sem bordas
+Fullscreen,Fullscreen,Pantalla completa,Plein écran,Vollbild,Schermo intero,Tela cheia
+Unlimited,Unlimited,Sin límite,Illimité,Unbegrenzt,Illimitati,Ilimitado
+On,On,Sí,Oui,An,Sì,Sim
+Off,Off,No,Non,Aus,No,Não
+Keep these display settings?,Keep these display settings?,¿Mantener estos ajustes de pantalla?,Garder ces réglages d'affichage ?,Diese Anzeigeeinstellungen behalten?,Mantenere queste impostazioni?,Manter estas configurações de tela?
+Reverting in %d s,Reverting in %d s,Se deshará en %d s,Annulation dans %d s,Zurücksetzung in %d s,Ripristino tra %d s,Revertendo em %d s
+Keep,Keep,Mantener,Garder,Behalten,Mantieni,Manter
+Revert,Revert,Deshacer,Annuler,Rückgängig,Annulla,Desfazer
+Hold Enter to skip,Hold Enter to skip,Mantén Enter para saltar,Maintiens Entrée pour passer,Enter halten zum Überspringen,Tieni premuto Invio per saltare,Segure Enter para pular
+Hold A to skip,Hold A to skip,Mantén A para saltar,Maintiens A pour passer,A halten zum Überspringen,Tieni premuto A per saltare,Segure A para pular

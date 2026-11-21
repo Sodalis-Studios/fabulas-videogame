@@ -13,9 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://14oskdq7jbjn" path="res://entities/temporary_platform/sprites/broken_platform_particles_64x64.png" id="9_kta4p"]
 [ext_resource type="PackedScene" uid="uid://b3vinkl0hlcqf" path="res://entities/launch_platform/launch_platform.tscn" id="10_erbra"]
 [ext_resource type="PackedScene" uid="uid://slerbf25y7d3" path="res://entities/enemies/ground_enemy/variant b/ground_enemy.tscn" id="12_x154k"]
-[ext_resource type="PackedScene" uid="uid://b8p2ff1ifmr5o" path="res://ui/menus/pause_menu/pause_menu.tscn" id="13_erbra"]
 [ext_resource type="PackedScene" uid="uid://dp7x3d060s0vf" path="res://entities/enemies/ground_enemy/variant a/ground_enemy_speed.tscn" id="13_ktnby"]
-[ext_resource type="PackedScene" uid="uid://ckfknnfgb6qw6" path="res://ui/menus/settings_menu/settings_menu.tscn" id="14_oruy0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l3tdi"]
 texture = ExtResource("1_1bfl0")
@@ -181,12 +179,5 @@ scale = Vector2(1.765, 1.765)
 speed = 400
 chase_speed = 700
 chase_time = 1.4
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=640883658]
-
-[node name="PauseMenu" parent="CanvasLayer" unique_id=248075495 instance=ExtResource("13_erbra")]
-
-[node name="SettingsMenu" parent="CanvasLayer" unique_id=992204846 instance=ExtResource("14_oruy0")]
-visible = false
 
 [editable path="CameraRig"]

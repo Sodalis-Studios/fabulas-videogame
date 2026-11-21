@@ -3,8 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://ne62yfmf10ql" path="res://entities/player/player.tscn" id="1_71j2r"]
 [ext_resource type="PackedScene" uid="uid://csxb8umj1o67e" path="res://worlds/level_5_temporary_platforms/level_5_temporary_platforms.tscn" id="1_s0ueb"]
 [ext_resource type="PackedScene" uid="uid://drut5tkemtw57" path="res://shared/camera/camera_rig.tscn" id="2_s0ueb"]
-[ext_resource type="PackedScene" uid="uid://ckfknnfgb6qw6" path="res://ui/menus/settings_menu/settings_menu.tscn" id="4_5qlwy"]
-[ext_resource type="PackedScene" uid="uid://b8p2ff1ifmr5o" path="res://ui/menus/pause_menu/pause_menu.tscn" id="5_kl0vi"]
 
 [node name="TestingLevel" type="Node2D" unique_id=72990055]
 
@@ -15,10 +13,3 @@ position = Vector2(217, -171)
 
 [node name="CameraRig" parent="." unique_id=2139074347 node_paths=PackedStringArray("followed_node") instance=ExtResource("2_s0ueb")]
 followed_node = NodePath("../Player")
-
-[node name="Menus" type="CanvasLayer" parent="." unique_id=1787603081]
-
-[node name="SettingsMenu" parent="Menus" unique_id=992204846 instance=ExtResource("4_5qlwy")]
-visible = false
-
-[node name="PauseMenu" parent="Menus" unique_id=248075495 instance=ExtResource("5_kl0vi")]

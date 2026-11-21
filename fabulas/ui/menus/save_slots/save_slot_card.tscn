@@ -1,0 +1,138 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/menus/save_slots/save_slot_card.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://bb17e8srbq51o" path="res://assets/fonts/gohan_2/Gohan.ttf" id="2_title"]
+[ext_resource type="PackedScene" uid="uid://bbbaoxb0tew6m" path="res://ui/buttons/normal_button/custom_button.tscn" id="3_button"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(0.05, 0.05, 0.06, 0.88)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.1)
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card_focus"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.96, 0.93, 0.88, 0.9)
+
+[node name="SaveSlotCard" type="VBoxContainer"]
+theme_override_constants/separation = 20
+script = ExtResource("1_script")
+
+[node name="Card" type="Button" parent="."]
+custom_minimum_size = Vector2(420, 420)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_card")
+theme_override_styles/hover = SubResource("StyleBoxFlat_card")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_card")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_card")
+theme_override_styles/focus = SubResource("StyleBoxFlat_card_focus")
+
+[node name="Margin" type="MarginContainer" parent="Card"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 36
+
+[node name="Content" type="VBoxContainer" parent="Card/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="SlotLabel" type="Label" parent="Card/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.93, 0.88, 0.8)
+theme_override_font_sizes/font_size = 28
+text = "Game 1"
+text_overrun_behavior = 3
+
+[node name="TopSpacer" type="Control" parent="Card/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Empty" type="VBoxContainer" parent="Card/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Plus" type="Label" parent="Card/Margin/Content/Empty"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.93, 0.88, 0.6)
+theme_override_fonts/font = ExtResource("2_title")
+theme_override_font_sizes/font_size = 120
+text = "+"
+horizontal_alignment = 1
+
+[node name="NewLabel" type="Label" parent="Card/Margin/Content/Empty"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "New game"
+horizontal_alignment = 1
+
+[node name="Info" type="VBoxContainer" parent="Card/Margin/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="SceneLabel" type="Label" parent="Card/Margin/Content/Info"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_title")
+theme_override_font_sizes/font_size = 48
+text = "Level Start"
+autowrap_mode = 2
+
+[node name="TimeLabel" type="Label" parent="Card/Margin/Content/Info"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "0m 00s"
+
+[node name="DateLabel" type="Label" parent="Card/Margin/Content/Info"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.93, 0.88, 0.5)
+theme_override_font_sizes/font_size = 24
+text = "1 Jan 2026, 00:00"
+
+[node name="BottomSpacer" type="Control" parent="Card/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Actions" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="RenameButton" parent="Actions" instance=ExtResource("3_button")]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Rename"
+
+[node name="DeleteButton" parent="Actions" instance=ExtResource("3_button")]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Delete"

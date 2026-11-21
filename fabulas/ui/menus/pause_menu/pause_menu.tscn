@@ -1,12 +1,33 @@
 [gd_scene format=3 uid="uid://b8p2ff1ifmr5o"]
 
-[ext_resource type="Script" uid="uid://daf7ro7281rci" path="res://ui/menus/pause_menu/pause_menu.gd" id="1_51icm"]
-[ext_resource type="Theme" uid="uid://dicl4ssjmskrc" path="res://ui/menus/menu_theme.tres" id="1_hv7dm"]
-[ext_resource type="PackedScene" uid="uid://bbbaoxb0tew6m" path="res://ui/buttons/normal_button/custom_button.tscn" id="3_2pmna"]
-[ext_resource type="FontFile" uid="uid://bb17e8srbq51o" path="res://assets/fonts/gohan_2/Gohan.ttf" id="3_cid4m"]
+[ext_resource type="Script" uid="uid://daf7ro7281rci" path="res://ui/menus/pause_menu/pause_menu.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://cl07t5kuiu5o1" path="res://ui/menus/settings_menu/settings_theme.tres" id="2_theme"]
+[ext_resource type="FontFile" uid="uid://bb17e8srbq51o" path="res://assets/fonts/gohan_2/Gohan.ttf" id="3_title"]
+[ext_resource type="PackedScene" uid="uid://bbbaoxb0tew6m" path="res://ui/buttons/normal_button/custom_button.tscn" id="4_button"]
+[ext_resource type="PackedScene" path="res://ui/menus/confirm_dialog/confirm_dialog.tscn" id="5_confirm"]
+[ext_resource type="Script" uid="uid://bdqgdj7bij706" path="res://ui/menus/edge_ornament/edge_ornament.gd" id="6_ejq3d"]
+[ext_resource type="Script" uid="uid://oftjpra0owq1" path="res://ui/menus/menu_selector/menu_selector.gd" id="6_selector"]
+[ext_resource type="Shader" uid="uid://b65ocn3grbwub" path="res://ui/menus/pause_menu/blur_background.gdshader" id="7_blur"]
+[ext_resource type="Texture2D" uid="uid://br7ef7ehamhal" path="res://ui/menus/edge_ornament/column_border.png" id="7_ejq3d"]
+[ext_resource type="Texture2D" uid="uid://ds6ac3f3kl7hp" path="res://ui/menus/menu_selector/feather.png" id="8_feather"]
+[ext_resource type="Script" path="res://ui/input_hint/input_hint.gd" id="hint_script"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
+shader = ExtResource("7_blur")
+shader_parameter/amount = 1.0
+shader_parameter/radius = 5.0
+shader_parameter/lod = 2.5
+shader_parameter/tint = Color(0.03, 0.03, 0.04, 0.45)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7hqen"]
+content_margin_left = 88.0
+content_margin_top = 96.0
+content_margin_right = 48.0
+content_margin_bottom = 72.0
+bg_color = Color(0.05, 0.05, 0.06, 0.88)
 
 [node name="PauseMenu" type="Control" unique_id=248075495]
-process_mode = 2
+process_mode = 3
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -14,51 +35,173 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_51icm")
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1198724314]
+[node name="Blur" type="ColorRect" parent="." unique_id=1387316527]
+material = SubResource("ShaderMaterial_blur")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_hv7dm")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1551091453]
+[node name="Side" type="PanelContainer" parent="." unique_id=325237326]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 520.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7hqen")
+
+[node name="MainView" type="VBoxContainer" parent="Side" unique_id=609980216]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+theme_override_constants/separation = 14
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2063563408]
+[node name="TopSpacer" type="Control" parent="Side/MainView" unique_id=1788409396]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_cid4m")
-theme_override_font_sizes/font_size = 50
-text = "Pause"
+size_flags_vertical = 3
 
-[node name="Resume" parent="MarginContainer/VBoxContainer" unique_id=307769692 instance=ExtResource("3_2pmna")]
+[node name="Title" type="Label" parent="Side/MainView" unique_id=1488443154]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
-text = "Resume
+theme_override_fonts/font = ExtResource("3_title")
+theme_override_font_sizes/font_size = 54
+text = "Paused"
 
-"
-flat = false
-
-[node name="Settings" parent="MarginContainer/VBoxContainer" unique_id=1956638301 instance=ExtResource("3_2pmna")]
+[node name="Line" type="ColorRect" parent="Side/MainView" unique_id=238372170]
+custom_minimum_size = Vector2(72, 3)
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
-text = "Settings
-"
-flat = false
+size_flags_horizontal = 0
+color = Color(0.96, 0.93, 0.88, 0.35)
 
-[node name="Exit" parent="MarginContainer/VBoxContainer" unique_id=1543039629 instance=ExtResource("3_2pmna")]
+[node name="Gap" type="Control" parent="Side/MainView" unique_id=1530417740]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
-text = "Exit
-"
-flat = false
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[node name="ResumeButton" parent="Side/MainView" unique_id=949708865 instance=ExtResource("4_button")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"MainMenuButton"
+theme_override_font_sizes/font_size = 44
+text = "Resume"
+
+[node name="StatsButton" parent="Side/MainView" unique_id=1374620981 instance=ExtResource("4_button")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"MainMenuButton"
+theme_override_font_sizes/font_size = 44
+text = "Statistics"
+
+[node name="SettingsButton" parent="Side/MainView" unique_id=1039461384 instance=ExtResource("4_button")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"MainMenuButton"
+theme_override_font_sizes/font_size = 44
+text = "Settings"
+
+[node name="ExitButton" parent="Side/MainView" unique_id=1218455022 instance=ExtResource("4_button")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"MainMenuButton"
+theme_override_font_sizes/font_size = 44
+text = "Exit"
+
+[node name="BottomSpacer" type="Control" parent="Side/MainView" unique_id=1655829470]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.4
+
+[node name="Hint" type="Label" parent="Side/MainView" unique_id=1102938475]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.93, 0.88, 0.45)
+theme_override_font_sizes/font_size = 22
+text = "Esc   Resume"
+script = ExtResource("hint_script")
+keyboard_text = "Esc   Resume"
+controller_text = "Start   Resume"
+
+[node name="StatsView" type="VBoxContainer" parent="Side" unique_id=1928374650]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TopSpacer" type="Control" parent="Side/StatsView" unique_id=1203948576]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="Side/StatsView" unique_id=1847362910]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_title")
+theme_override_font_sizes/font_size = 54
+text = "Statistics"
+
+[node name="Line" type="ColorRect" parent="Side/StatsView" unique_id=1092837465]
+custom_minimum_size = Vector2(72, 3)
+layout_mode = 2
+size_flags_horizontal = 0
+color = Color(0.96, 0.93, 0.88, 0.35)
+
+[node name="Gap" type="Control" parent="Side/StatsView" unique_id=1564738291]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+
+[node name="StatsGrid" type="GridContainer" parent="Side/StatsView" unique_id=1675849302]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 18
+columns = 2
+
+[node name="Gap2" type="Control" parent="Side/StatsView" unique_id=1786950413]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+
+[node name="StatsBackButton" parent="Side/StatsView" unique_id=1897061524 instance=ExtResource("4_button")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"MainMenuButton"
+theme_override_font_sizes/font_size = 44
+text = "Back"
+
+[node name="BottomSpacer" type="Control" parent="Side/StatsView" unique_id=1908172635]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.4
+
+[node name="Hint" type="Label" parent="Side/StatsView" unique_id=1019283746]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.93, 0.88, 0.45)
+theme_override_font_sizes/font_size = 22
+text = "Esc   Back"
+script = ExtResource("hint_script")
+keyboard_text = "Esc   Back"
+controller_text = "B   Back"
+
+[node name="Border" type="Node2D" parent="Side" unique_id=1294360342]
+script = ExtResource("6_ejq3d")
+texture = ExtResource("7_ejq3d")
+width = 100.0
+overhang = 0.85
+
+[node name="ConfirmExit" parent="." unique_id=520075380 instance=ExtResource("5_confirm")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="MenuSelector" type="Control" parent="." unique_id=592105953 node_paths=PackedStringArray("buttons_container")]
+anchors_preset = 0
+script = ExtResource("6_selector")
+buttons_container = NodePath("../Side")
+icon = ExtResource("8_feather")
+marker_size = Vector2(66, 22)
+marker_color = Color(1, 1, 1, 1)
+gap = 10.0
+selected_scale = 1.08
+grow_from = Vector2(0, 0.5)

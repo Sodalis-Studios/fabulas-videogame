@@ -1,0 +1,94 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/menus/save_slots/save_slots_menu.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://cl07t5kuiu5o1" path="res://ui/menus/settings_menu/settings_theme.tres" id="2_theme"]
+[ext_resource type="FontFile" uid="uid://bb17e8srbq51o" path="res://assets/fonts/gohan_2/Gohan.ttf" id="3_title"]
+[ext_resource type="PackedScene" path="res://ui/menus/save_slots/save_slot_card.tscn" id="4_card"]
+[ext_resource type="PackedScene" path="res://ui/menus/confirm_dialog/confirm_dialog.tscn" id="5_confirm"]
+[ext_resource type="Shader" path="res://ui/menus/pause_menu/blur_background.gdshader" id="6_blur"]
+[ext_resource type="PackedScene" path="res://ui/menus/name_dialog/name_dialog.tscn" id="7_name"]
+[ext_resource type="Script" path="res://ui/input_hint/input_hint.gd" id="hint_script"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
+shader = ExtResource("6_blur")
+shader_parameter/amount = 1.0
+shader_parameter/radius = 5.0
+shader_parameter/lod = 2.5
+shader_parameter/tint = Color(0.03, 0.03, 0.04, 0.5)
+
+[node name="SaveSlotsMenu" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
+
+[node name="Dim" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_blur")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Layout" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+theme_override_constants/separation = 56
+
+[node name="Title" type="Label" parent="Center/Layout"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_title")
+theme_override_font_sizes/font_size = 72
+text = "Select a game"
+horizontal_alignment = 1
+
+[node name="Slots" type="HBoxContainer" parent="Center/Layout"]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="Slot1" parent="Center/Layout/Slots" instance=ExtResource("4_card")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Slot2" parent="Center/Layout/Slots" instance=ExtResource("4_card")]
+unique_name_in_owner = true
+layout_mode = 2
+slot = 1
+
+[node name="Slot3" parent="Center/Layout/Slots" instance=ExtResource("4_card")]
+unique_name_in_owner = true
+layout_mode = 2
+slot = 2
+
+[node name="Hint" type="Label" parent="Center/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.93, 0.88, 0.45)
+theme_override_font_sizes/font_size = 24
+text = "Esc   Back"
+script = ExtResource("hint_script")
+keyboard_text = "Esc   Back"
+controller_text = "B   Back"
+horizontal_alignment = 1
+
+[node name="ConfirmDelete" parent="." instance=ExtResource("5_confirm")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="NameDialog" parent="." instance=ExtResource("7_name")]
+unique_name_in_owner = true
+layout_mode = 1

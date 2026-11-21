@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bicnfgsm2airq"
+
+[deps]
+
+files=["res://shared/localization/translations.en.translation", "res://shared/localization/translations.es.translation", "res://shared/localization/translations.fr.translation", "res://shared/localization/translations.de.translation", "res://shared/localization/translations.it.translation", "res://shared/localization/translations.pt.translation"]
+
+source_file="res://shared/localization/translations.csv"
+dest_files=["res://shared/localization/translations.en.translation", "res://shared/localization/translations.es.translation", "res://shared/localization/translations.fr.translation", "res://shared/localization/translations.de.translation", "res://shared/localization/translations.it.translation", "res://shared/localization/translations.pt.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

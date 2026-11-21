@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/menus/game_menus/game_menus.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://b8p2ff1ifmr5o" path="res://ui/menus/pause_menu/pause_menu.tscn" id="2_pause"]
+[ext_resource type="PackedScene" uid="uid://ckfknnfgb6qw6" path="res://ui/menus/settings_menu/settings_menu.tscn" id="3_settings"]
+[ext_resource type="PackedScene" path="res://ui/hud/play_time/play_time_hud.tscn" id="4_play_time"]
+
+[node name="GameMenus" type="CanvasLayer"]
+process_mode = 3
+layer = 10
+script = ExtResource("1_script")
+
+[node name="PlayTimeHud" parent="." instance=ExtResource("4_play_time")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("2_pause")]
+
+[node name="SettingsMenu" parent="." instance=ExtResource("3_settings")]
+visible = false
